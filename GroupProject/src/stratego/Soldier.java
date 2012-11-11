@@ -63,10 +63,14 @@ public class Soldier
         if(newx != this.x && newy != this.y) {
             return -1;
         }
-        else {
+        else if (newx == (x - 1) || newx == (x + 1) || newy == (y - 1)
+            || newy == (y + 1)){
             this.x = newx;
             this.y = newy;
             return 0;
+        }
+        else {
+            return -1;
         }
     }
 
@@ -91,6 +95,14 @@ public class Soldier
             move(enemyX, enemyY);
             return 0;
         }
+    }
+
+    /**
+     * This is used by subclasses to move the piece.
+     */
+    protected void setPosition(int newx, int newy) {
+        this.x = newx;
+        this.y = newy;
     }
 
 }
