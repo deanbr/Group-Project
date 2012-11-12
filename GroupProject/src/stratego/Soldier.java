@@ -8,10 +8,9 @@ package stratego;
  *  @author J
  *  @version Nov 10, 2012
  */
-public class Soldier
+public class Soldier extends GamePiece
 {
-    private int x;
-    private int y;
+
     private int rank;
 
     /**
@@ -21,25 +20,8 @@ public class Soldier
      * @param rank is the rank of the soldier.
      */
     public Soldier(int x, int y, int rank) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.rank = rank;
-    }
-
-    /***
-     *Returns the x position.
-     *@return x is the x position.
-     */
-    public int getX() {
-        return x;
-    }
-
-    /**
-     * Returns the y position.
-     * @return y is the y position.
-     */
-    public int getY() {
-        return y;
     }
 
     /**
@@ -60,13 +42,13 @@ public class Soldier
      * @return Success of the move.
      */
     public int move(int newx, int newy) {
-        if(newx != this.x && newy != this.y) {
+        if(newx != this.getX() && newy != this.getY()) {
             return -1;
         }
-        else if (newx == (x - 1) || newx == (x + 1) || newy == (y - 1)
-            || newy == (y + 1)){
-            this.x = newx;
-            this.y = newy;
+        else if (newx == (this.getX() - 1) || newx == (this.getX() + 1) || newy == (this.getY() - 1)
+            || newy == (this.getY() + 1)){
+            this.setX(newx);
+            this.setY(newy);
             return 0;
         }
         else {
@@ -82,7 +64,7 @@ public class Soldier
      * @return is the outcome of the battle.
      */
     public int battle(int enemyRank, int enemyX, int enemyY) {
-        if(enemyX != this.x && enemyY != this.y) {
+        if(enemyX != this.getX() && enemyY != this.getY()) {
             return -1;
         }
         else if (enemyRank > getRank()) {
@@ -97,12 +79,6 @@ public class Soldier
         }
     }
 
-    /**
-     * This is used by subclasses to move the piece.
-     */
-    protected void setPosition(int newx, int newy) {
-        this.x = newx;
-        this.y = newy;
-    }
+
 
 }
