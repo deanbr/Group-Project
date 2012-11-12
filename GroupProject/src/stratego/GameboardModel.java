@@ -9,11 +9,11 @@ package stratego;
  */
 public class GameboardModel
 {
-    private Soldier[][] board;
+    private GamePiece[][] board;
     private int size = 10;
 
     public GameboardModel() {
-        board = new Soldier[size][size];
+        board = new GamePiece[size][size];
     }
 
 

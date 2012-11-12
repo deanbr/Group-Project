@@ -45,8 +45,8 @@ public class Soldier extends GamePiece
         if(newx != this.getX() && newy != this.getY()) {
             return -1;
         }
-        else if (newx == (this.getX() - 1) || newx == (this.getX() + 1) || newy == (this.getY() - 1)
-            || newy == (this.getY() + 1)){
+        else if (newx == (this.getX() - 1) || newx == (this.getX() + 1) ||
+            newy == (this.getY() - 1) || newy == (this.getY() + 1)){
             this.setX(newx);
             this.setY(newy);
             return 0;
@@ -78,7 +78,5 @@ public class Soldier extends GamePiece
             return 0;
         }
     }
-
-
 
 }
