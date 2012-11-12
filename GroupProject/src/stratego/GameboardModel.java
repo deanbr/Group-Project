@@ -1,7 +1,5 @@
 package stratego;
 
-import sofia.graphics.RectangleShape;
-
 // -------------------------------------------------------------------------
 /**
  *  The model for the board.
@@ -11,11 +9,11 @@ import sofia.graphics.RectangleShape;
  */
 public class GameboardModel
 {
-    private RectangleShape[][] board;
+    private Soldier[][] board;
     private int size = 10;
 
     public GameboardModel() {
-        board = new RectangleShape[size][size];
+        board = new Soldier[size][size];
     }
 
 
