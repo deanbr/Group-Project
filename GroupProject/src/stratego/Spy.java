@@ -9,21 +9,20 @@ package stratego;
  *  @author J
  *  @version Nov 10, 2012
  */
-public class Spy
-    extends Soldier
+public class Spy extends Soldier
 {
 
     /**
      * This will create a spy game piece.
      * @param x is the x position.
      * @param y is the y position.
-     * @param rank is the rank.
+     * @param team 0 represents blue, 1 represents red.
      */
-    public Spy(int x, int y, int rank) {
-        super(x, y, rank);
+    public Spy(int x, int y, int team) {
+        super(x, y, team, 10);
     }
 
-    @Override
+   /* @Override
     public int battle(int enemyRank, int enemyX, int enemyY) {
         if(enemyX != getX() && enemyY != getY()) {
             return -1;
@@ -42,5 +41,5 @@ public class Spy
             move(enemyX, enemyY);
             return 0;
         }
-    }
+    }*/
 }

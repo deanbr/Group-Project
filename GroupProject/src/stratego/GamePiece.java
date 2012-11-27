@@ -5,10 +5,22 @@ public class GamePiece
 
     private int x;
     private int y;
+    private int team;
+    private int rank;
 
-    public GamePiece(int x, int y) {
+    // ----------------------------------------------------------
+    /**
+     * Create a new GamePiece object.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param team Team 0 corresponds to the blue team and team 1 corresponds to the
+     * red team.
+     */
+    public GamePiece(int x, int y, int team, int rank) {
         this.x = x;
         this.y = y;
+        this.team = team;
+        this.rank = rank;
     }
 
     /***
@@ -41,6 +53,19 @@ public class GamePiece
     protected void setPosition(int newx, int newy) {
         this.x = newx;
         this.y = newy;
+    }
+
+    public int getTeam() {
+        return this.team;
+    }
+
+    /**
+     * This method will return the soldier rank so the game can determine who
+     * won the battle.
+     * @return rank is the rank.
+     */
+    public int getRank() {
+        return rank;
     }
 
 }

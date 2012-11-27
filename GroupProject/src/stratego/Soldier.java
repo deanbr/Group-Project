@@ -3,7 +3,9 @@ package stratego;
 /**
  // -------------------------------------------------------------------------
 /**
- *  This is the superclass of soldier all game pieces will extend it.
+ *  This is the superclass of soldier, and all game pieces will extend it.
+ *  The Marshall, General, Colonel, Major, Captain, Liutenant, and Sergeant
+ *  pieces rely solely one this subclass.
  *
  *  @author J
  *  @version Nov 10, 2012
@@ -11,30 +13,21 @@ package stratego;
 public class Soldier extends GamePiece
 {
 
-    private int rank;
-
     /**
      * This will initialize a soldier object.
      * @param x is the original x position.
      * @param y is the original y position.
+     * @param team Enter 0 for blue, 1 for red.
      * @param rank is the rank of the soldier.
      */
-    public Soldier(int x, int y, int rank) {
-        super(x, y);
-        this.rank = rank;
+    public Soldier(int x, int y, int team, int rank) {
+        super(x, y, team, rank);
     }
 
-    /**
-     * This method will return the soldier rank so the game can determine who
-     * won the battle.
-     * @return rank is the rank.
-     */
-    public int getRank() {
-        return rank;
-    }
+
 
     /**
-     * This method will handle every soldier movement type, but one.
+     * This method will handle every soldier movement type, except for Scout.
      * For now it will return -1 if the user tries to move more than one block
      * in any direction. If the move is successful it will return 0.
      * @param newx is the new x location.
@@ -62,7 +55,7 @@ public class Soldier extends GamePiece
      * @param enemyX is the x position of the enemy.
      * @param enemyY is the y position of the enemy.
      * @return is the outcome of the battle.
-     */
+     *//*
     public int battle(int enemyRank, int enemyX, int enemyY) {
         if(enemyX != this.getX() && enemyY != this.getY()) {
             return -1;
@@ -77,6 +70,6 @@ public class Soldier extends GamePiece
             move(enemyX, enemyY);
             return 0;
         }
-    }
+    }*/
 
 }
