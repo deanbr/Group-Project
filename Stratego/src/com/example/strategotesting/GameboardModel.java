@@ -26,8 +26,10 @@ public class GameboardModel
     {
         board = new GamePiece[size][size];
         isGameOver = false;
-
+        bluePieces = new ArrayList<GamePiece>();
+        redPieces = new ArrayList<GamePiece>();
     }
+
 
     /**
      * Sets a piece on the board in the set up of the game.

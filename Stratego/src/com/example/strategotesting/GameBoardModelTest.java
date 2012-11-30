@@ -26,11 +26,12 @@ public class GameBoardModelTest
     }
 
     public void testBattle() {
-        //board.setPiece(1, 1, 0, 1); //marshall
-        //board.setPiece(1, 2, 1, 5); //captain
-        assertEquals(0, 0);
+       // board.setPiece(1, 1, 0, 1); //marshall
+       // board.setPiece(1, 2, 1, 5); //captain
+        Soldier marshall = new Soldier(1, 1, 0, 1);
+        Soldier captain = new Soldier(1, 2, 1, 5);
 
-        //assertEquals(0, board.movement(attacker, 1, 2));
+        assertEquals(1, marshall.battle(marshall, captain));
     }
 
 }
