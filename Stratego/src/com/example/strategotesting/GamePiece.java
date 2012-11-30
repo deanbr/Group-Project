@@ -15,6 +15,7 @@ public class GamePiece
      * @param y The y coordinate.
      * @param team Team 0 corresponds to the blue team and team 1 corresponds to the
      * red team.
+     * @param rank The rank of the piece.
      */
     public GamePiece(int x, int y, int team, int rank) {
         this.x = x;
