@@ -41,7 +41,23 @@ public class GameboardModel
      */
     public boolean setPiece(int x, int y, int team, int rank)
     {
-        GamePiece newPiece = new GamePiece(x, y, team, rank);
+        GamePiece newPiece;
+        if (rank == 9) {
+            newPiece = new Scout(x, y, team);
+        }
+        else if (rank == 10) {
+            newPiece = new Spy(x, y, team);
+        }
+        else if (rank == 11) {
+            newPiece = new Bomb(x, y, team);
+        }
+        else if (rank == 12) {
+            newPiece = new Flag(x, y, team);
+        }
+        else {
+            newPiece = new GamePiece(x, y, team, rank);
+        }
+
         if (board[x][y] == null)
         {
             board[x][y] = newPiece;
@@ -59,6 +75,15 @@ public class GameboardModel
         }
     }
 
+    /**
+     * This method returns the piece at the location.
+     * @param x is the x location.
+     * @param y is the y location.
+     * @return is the GamePiece at the location.
+     */
+    public GamePiece getPiece(int x, int y) {
+        return board[x][y];
+    }
 
     /**
      * Handles the movement on the gameboard.
@@ -157,12 +182,4 @@ public class GameboardModel
         return isGameOver;
     }
 
-    public boolean redHasSet() {
-        if (redPieces.size() == 40) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 }
