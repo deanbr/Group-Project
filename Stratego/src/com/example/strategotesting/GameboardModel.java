@@ -156,4 +156,13 @@ public class GameboardModel
     {
         return isGameOver;
     }
+
+    public boolean redHasSet() {
+        if (redPieces.size() == 40) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

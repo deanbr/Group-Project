@@ -1,6 +1,8 @@
 package com.example.strategotesting;
 
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.view.MotionEvent;
 import sofia.graphics.RectangleShape;
 import sofia.graphics.Color;
 import sofia.graphics.TextShape;
@@ -15,13 +17,27 @@ public class StrategoScreen
     private TextShape[][] screenText;
     private RectangleShape[][] screenMap;
     private GameboardModel model;
+    private boolean redPlacement;
     private int redPieces;
+    private final int invisible = 4;
+    private final int visible = 0;
+
+    private Spinner piecesOptions;
+    private String[] opts = {"Marshal", "General", "Colonel" ,"Major" ,"Captain"
+        ,"Lieutenant", "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag" };
 
     public void initialize() {
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, opts);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        piecesOptions.setAdapter(aa);
+        piecesOptions.setVisibility(invisible);
+
+        redPlacement = true;
         model = new GameboardModel();
-        cellSize = Math.min(this.getWidth(), this.getHeight()) / 7;
+        cellSize = Math.min(this.getWidth(), this.getHeight()) / size;
         screenText = new TextShape[size][size];
         screenMap = new RectangleShape[size][size];
+
         float x1 = 0;
         float y1 = 0;
         float x2 = cellSize;
@@ -45,8 +61,15 @@ public class StrategoScreen
         }
     }
 
-    public void setPieces() {
-        Toast.makeText(this, "Red Player Place Your Pieces", Toast.LENGTH_LONG).show();
+    public void onTouchDown(MotionEvent me) {
+        if (redPlacement) {
+            int x = (int) (me.getX() / cellSize);
+            int y = (int) (me.getY() / cellSize);
+            setPieces();
+        }
+    }
 
+    public void setPieces() {
+        System.out.println(piecesOptions.getSelectedItemPosition());
     }
 }
