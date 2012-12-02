@@ -1,5 +1,6 @@
 package com.example.strategotesting;
 
+import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
@@ -30,10 +31,12 @@ public class StrategoScreen
     private GameboardModel model;
     private TextShape ts;
 
+    private int totalSetPieces = 0;
     private boolean hasBeenSet;
     private boolean redMove = true;
     private int pieceType = 1;
     private Button newGame;
+
 
     /**
      * This method is run initially. It does very little other than some base
@@ -67,115 +70,60 @@ public class StrategoScreen
         }
     }
 
-    public void setRedPieces() {
-        pieceType = 1;
-        //for (int i = 0; i < 1; i++) {
-            Toast.makeText(this, "Place Your Marshal", Toast.LENGTH_SHORT).show();
-          //  while (!hasBeenSet) {
-                //Has to be empty
-            //}
-       // }
-        /**
-        pieceType = 2;
-        hasBeenSet = false;
-        for (int i = 0; i < 1; i++) {
-            Toast.makeText(this, "Place Your General", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
+    public void isRedSet() {
+        if (!hasBeenSet) {
+            if (totalSetPieces < 1) {
+                pieceType = 1;
+                Toast.makeText(this, "Set your Marshal", Toast.LENGTH_SHORT).show();
             }
-        }
+            else if (totalSetPieces < 2) {
+                pieceType = 2;
+                Toast.makeText(this, "Set your General", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 4) {
+                pieceType = 3;
+                Toast.makeText(this, "Set your Colonel", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 7) {
+                pieceType = 4;
+                Toast.makeText(this, "Set your Major", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 11) {
+                pieceType = 5;
+                Toast.makeText(this, "Set your Captain", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 15) {
+                pieceType = 6;
+                Toast.makeText(this, "Set your Lieutenant", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 19) {
+                pieceType = 7;
+                Toast.makeText(this, "Set your Sergeant", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 24) {
+                pieceType = 8;
+                Toast.makeText(this, "Set your Miner", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 32) {
+                pieceType = 9;
+                Toast.makeText(this, "Set your Scout", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 33) {
+                pieceType = 10;
+                Toast.makeText(this, "Set your Spy", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 39) {
+                pieceType = 11;
+                Toast.makeText(this, "Set your Bomb", Toast.LENGTH_SHORT).show();
+            }
+            else if (totalSetPieces < 40) {
+                pieceType = 12;
+                Toast.makeText(this, "Set your Flag", Toast.LENGTH_SHORT).show();
+            }
+            else {
 
-        pieceType = 3;
-        hasBeenSet = false;
-        for (int i = 0; i < 2; i++) {
-            Toast.makeText(this, "Place Your Colonel", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
             }
         }
-
-        pieceType = 4;
-        hasBeenSet = false;
-        for (int i = 0; i < 3; i++) {
-            Toast.makeText(this, "Place Your Major", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 5;
-        hasBeenSet = false;
-        for (int i = 0; i < 4; i++) {
-            Toast.makeText(this, "Place Your Captain", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 6;
-        hasBeenSet = false;
-        for (int i = 0; i < 4; i++) {
-            Toast.makeText(this, "Place Your Lieutenant", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 7;
-        hasBeenSet = false;
-        for (int i = 0; i < 4; i++) {
-            Toast.makeText(this, "Place Your Sergeant", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 8;
-        hasBeenSet = false;
-        for (int i = 0; i < 5; i++) {
-            Toast.makeText(this, "Place Your Miner", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 9;
-        hasBeenSet = false;
-        for (int i = 0; i < 8; i++) {
-            Toast.makeText(this, "Place Your Scout", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 10;
-        hasBeenSet = false;
-        for (int i = 0; i < 8; i++) {
-            Toast.makeText(this, "Place Your Spy", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 11;
-        hasBeenSet = false;
-        for (int i = 0; i < 8; i++) {
-            Toast.makeText(this, "Place Your Bombs", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-
-        pieceType = 12;
-        hasBeenSet = false;
-        for (int i = 0; i < 8; i++) {
-            Toast.makeText(this, "Place Your Flag", Toast.LENGTH_SHORT).show();
-            while (!hasBeenSet) {
-                //Has to be empty
-            }
-        }
-        redMove = false;
-        hasBeenSet = false;**/
     }
 
     /**
@@ -197,7 +145,6 @@ public class StrategoScreen
         else {
             //Blue's normal move
         }
-        System.out.println("X: " + x + " Y: " + y);
     }
 
     /**
@@ -206,16 +153,21 @@ public class StrategoScreen
      * @param y is the y position.
      */
     private void playerSetPiece(int x, int y) {
-        Color textcolor = Color.red;
-        if (!redMove) {
-            textcolor = Color.blue;
+        if (!redMove && y >= 0 && y <= 3) {
+            model.setPiece(x, y, 1, pieceType);
+            screenText[x][y].setText(model.getPiece(x, y).toStringShort());
+            screenText[x][y].setColor(Color.blue);
+            totalSetPieces++;
         }
-        if (y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
+        else if (y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
             model.setPiece(x, y, 0, pieceType);
             screenText[x][y].setText(model.getPiece(x, y).toStringShort());
-            screenText[x][y].setColor(textcolor);
-            hasBeenSet = true;
+            screenText[x][y].setColor(Color.red);
+            totalSetPieces++;
+            isRedSet();
+            //hasBeenSet = true;
         }
+
     }
 
     /**
@@ -224,6 +176,6 @@ public class StrategoScreen
     public void newGameClicked() {
         model = new GameboardModel();
         hasBeenSet = false;
-        setRedPieces();
+        isRedSet();
     }
 }
