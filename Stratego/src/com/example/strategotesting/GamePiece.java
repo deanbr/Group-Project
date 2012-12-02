@@ -1,5 +1,13 @@
 package com.example.strategotesting;
 
+/**
+ * // -------------------------------------------------------------------------
+/**
+ * This is the generic super class of all gamepieces.
+ *
+ *  @author J
+ *  @version Dec 2, 2012
+ */
 public class GamePiece
 {
 
@@ -40,22 +48,36 @@ public class GamePiece
         return y;
     }
 
+    /**
+     * This method sets the x location.
+     * @param x is the x location.
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * This method sets the Y location.
+     * @param y is the y location.
+     */
     public void setY(int y) {
         this.y = y;
     }
 
     /**
      * This is used by subclasses to move the piece.
+     * @param newx is the new x location.
+     * @param newy is the new y locaiton.
      */
     protected void setPosition(int newx, int newy) {
         this.x = newx;
         this.y = newy;
     }
 
+    /**
+     * This method returns the team.
+     * @return is the int value of the team.
+     */
     public int getTeam() {
         return this.team;
     }
@@ -67,6 +89,65 @@ public class GamePiece
      */
     public int getRank() {
         return rank;
+    }
+
+    /**
+     * This method will return the name of the piece type.
+     * @return is the name of the piece.
+     */
+    public String toString() {
+        if (getRank() == 1) {
+            return "Marshal";
+        }
+        else if (getRank() == 2) {
+            return "General";
+        }
+        else if (getRank() == 3) {
+            return "Colonel";
+        }
+        else if (getRank() == 4) {
+            return "Major";
+        }
+        else if (getRank() == 5) {
+            return "Captain";
+        }
+        else if (getRank() == 6) {
+            return "Lieutenant";
+        }
+        else if (getRank() == 7) {
+            return "Sergeant";
+        }
+        else if (getRank() == 8) {
+            return "Miner";
+        }
+        else if (getRank() == 9) {
+            return "Scout";
+        }
+        else if (getRank() == 10) {
+            return "Spy";
+        }
+        else if (getRank() == 11) {
+            return "Bomb";
+        }
+        else {
+            return "Flag";
+        }
+    }
+
+    /**
+     * This method returns the shorthand names for the board.
+     * @return is the shorthand name.
+     */
+    public String toStringShort() {
+        if (getRank() == 11) {
+            return "B";
+        }
+        else if (getRank() == 12){
+            return "F";
+        }
+        else {
+            return Integer.toString(getRank());
+        }
     }
 
 }
