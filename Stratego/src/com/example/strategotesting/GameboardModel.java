@@ -89,7 +89,8 @@ public class GameboardModel
      * Handles the movement on the gameboard.
      *
      * @return 0 if the move was successful,-1 if the move was unsuccessful, and
-     *         1 if the move resulted in a battle where both pieces died.
+     *         1 if the move resulted in a battle where both pieces died. -2 if
+     *         the move resulted in a loss.
      * @param mover
      *            The soldier moving.
      * @param x
@@ -109,20 +110,28 @@ public class GameboardModel
                 int battleResult = mover.battle(mover, board[x][y]);
                 if (battleResult == 1)
                 {
+                    removeFromPieceArrays(x, y);
                     board[x][y] = mover;
                     board[oldX][oldY] = null;
                     return 0;
                 }
                 else if (battleResult == -1)
                 {
+                    removeFromPieceArrays(oldX, oldY);
                     board[oldX][oldY] = null;
-                    return -1;
+                    return -2;
                 }
                 else if (battleResult == 0)
                 {
+                    removeFromPieceArrays(oldX, oldY);
+                    removeFromPieceArrays(x, y);
                     board[x][y] = null;
                     board[oldX][oldY] = null;
                     return 1;
+                }
+                else if (battleResult == 7) {
+                    isGameOver = true;
+                    return 0;
                 }
                 else
                 {
@@ -131,6 +140,8 @@ public class GameboardModel
             }
             else
             {
+                board[oldX][oldY] = null;
+                board[x][y] = mover;
                 return 0;
             }
         }
@@ -140,6 +151,20 @@ public class GameboardModel
         }
     }
 
+    /**
+     * This method removes an object from the piece arraylists so it will
+     * properly update the board.
+     * @param x is the x location.
+     * @param y is the y location.
+     */
+    private void removeFromPieceArrays(int x, int y) {
+        if (bluePieces.contains(board[x][y])) {
+            bluePieces.remove(board[x][y]);
+        }
+        else {
+            redPieces.remove(board[x][y]);
+        }
+    }
 
     /**
      * Simulates the battle mechanic. Accepts the attacking piece and the
@@ -165,13 +190,6 @@ public class GameboardModel
      */
 
     // ----------------------------------------------------------
-    /**
-     * Called when the flag is captured.
-     */
-    public void gameOver()
-    {
-        isGameOver = true;
-    }
 
     /**
      * Returns true if the game ends.
@@ -182,4 +200,29 @@ public class GameboardModel
         return isGameOver;
     }
 
+    /**
+     * This method returns the arraylist containing the bluepieces.
+     * @return is the list of pieces
+     */
+    public ArrayList<GamePiece> returnBluePieces(){
+        if (bluePieces.size() != 0) {
+            return bluePieces;
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * This method returns the arraylist containing the red pieces.
+     * @return is the list of pieces.
+     */
+    public ArrayList<GamePiece> returnRedPieces(){
+        if (redPieces.size() != 0) {
+            return redPieces;
+        }
+        else {
+            return null;
+        }
+    }
 }

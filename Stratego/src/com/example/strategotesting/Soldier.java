@@ -63,7 +63,8 @@ public class Soldier extends GamePiece
      * @param attacker The attacking GamePiece object.
      * @param defender  The GamePiece object being targeted.
      * @return Returns 1 if the attacker won and -1 if the attacker lost and 5
-     *         if there was no battle because the two pieces are team mates.
+     *         if there was no battle because the two pieces are team mates. 7
+     *         indicates that the flag has been found and the game is over.
      */
     public int battle(GamePiece attacker, GamePiece defender)
     {
@@ -81,7 +82,7 @@ public class Soldier extends GamePiece
             // flag is discovered
             else if (defender.getRank() == 12)
             {
-                return 1;
+                return 7;
             }
             // miner attacking bomb
             else if (attacker.getRank() == 8 && defender.getRank() == 11)

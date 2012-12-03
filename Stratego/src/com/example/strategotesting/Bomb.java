@@ -21,4 +21,13 @@ public class Bomb extends GamePiece
         super(x, y, team, 11);
     }
 
+    /**
+     * This is the move method for the bomb.
+     * @return it should always be -1 as a bomb can't move.
+     * @param x is the x location.
+     * @param y is the y location.
+     */
+    public int move(int x, int y) {
+        return -1;
+    }
 }
