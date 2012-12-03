@@ -30,4 +30,16 @@ public class Bomb extends GamePiece
     public int move(int x, int y) {
         return -1;
     }
+
+    /**
+     * Simulates the battle mechanic. Accepts the attacking piece and the
+     * defending piece and returns a "win," "tie," or "loss."
+     *
+     * @param attacker The attacking GamePiece object.
+     * @param defender  The GamePiece object being targeted.
+     * @return returns a junk value of -5 as it should never move.
+     */
+    public int battle(GamePiece attacker, GamePiece defender) {
+        return -5;
+    }
 }

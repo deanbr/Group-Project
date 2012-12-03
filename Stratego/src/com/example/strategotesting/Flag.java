@@ -21,4 +21,26 @@ public class Flag extends GamePiece
     {
         super(x, y, team, 12);
     }
+
+    /**
+     * This is the move method for the bomb.
+     * @return it should always be -1 as a flag can't move.
+     * @param x is the x location.
+     * @param y is the y location.
+     */
+    public int move(int x, int y) {
+        return -1;
+    }
+
+    /**
+     * Simulates the battle mechanic. Accepts the attacking piece and the
+     * defending piece and returns a "win," "tie," or "loss."
+     *
+     * @param attacker The attacking GamePiece object.
+     * @param defender  The GamePiece object being targeted.
+     * @return returns a junk value of -5 as it should never move.
+     */
+    public int battle(GamePiece attacker, GamePiece defender) {
+        return -5;
+    }
 }

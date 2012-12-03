@@ -1,11 +1,8 @@
 package com.example.strategotesting;
 
 import java.util.ArrayList;
-import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.view.MotionEvent;
 import sofia.graphics.RectangleShape;
 import sofia.graphics.Color;
@@ -195,6 +192,7 @@ public class StrategoScreen
                 coverPieces();
                 unCoverPieces();
                 hasBeenSet = true;
+                totalSetPieces = 0;
             }
         }
     }
@@ -305,6 +303,7 @@ public class StrategoScreen
             break;
 
             case -1:
+                selectedPieceIsSelected = false;
             break;
 
             case -2:

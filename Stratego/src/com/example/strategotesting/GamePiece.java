@@ -92,6 +92,80 @@ public class GamePiece
     }
 
     /**
+     * Simulates the battle mechanic. Accepts the attacking piece and the
+     * defending piece and returns a "win," "tie," or "loss."
+     *
+     * @param attacker The attacking GamePiece object.
+     * @param defender  The GamePiece object being targeted.
+     * @return Returns 1 if the attacker won and -1 if the attacker lost and 5
+     *         if there was no battle because the two pieces are team mates. 7
+     *         indicates that the flag has been found and the game is over.
+     */
+    public int battle(GamePiece attacker, GamePiece defender)
+    {
+        if (attacker.getTeam() == defender.getTeam())
+        {
+            return 5;
+        }
+        else if (attacker.getRank() > 9 || defender.getRank() > 9)
+        {
+            // spy attacking marshal
+            if (attacker.getRank() == 10 && defender.getRank() == 1)
+            {
+                return 1;
+            }
+            // flag is discovered
+            else if (defender.getRank() == 12)
+            {
+                return 7;
+            }
+            // miner attacking bomb
+            else if (attacker.getRank() == 8 && defender.getRank() == 11)
+            {
+                return 1; // win
+            }
+        }
+        else if (attacker.getRank() < defender.getRank())
+        {
+            return 1;
+        }
+        else if (attacker.getRank() == defender.getRank())
+        {
+            return 0;
+        }
+        return -1;
+    }
+
+    /**
+     * This method will handle every soldier movement type, except for Scout.
+     * For now it will return -1 if the user tries to move more than one block
+     * in any direction. If the move is successful it will return 0.
+     * @param newx is the new x location.
+     * @param newy is the new y location.
+     * @return Success of the move.
+     */
+    public int move(int newx, int newy) {
+        if(newx != this.getX() && newy != this.getY()) {
+            return -1;
+        }
+        else if (newx == (this.getX() - 1) || newx == (this.getX() + 1) ||
+            newy == (this.getY() - 1) || newy == (this.getY() + 1)){
+
+           /* if(board[newx][newy] != -1) {
+                battle = new Battle(this, b)
+            }
+            */
+
+            this.setX(newx);
+            this.setY(newy);
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    /**
      * This method will return the name of the piece type.
      * @return is the name of the piece.
      */

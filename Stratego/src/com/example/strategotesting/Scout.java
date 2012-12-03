@@ -9,7 +9,7 @@ package com.example.strategotesting;
  *  @author J
  *  @version Nov 11, 2012
  */
-public class Scout extends Soldier
+public class Scout extends GamePiece
 {
 
     // ----------------------------------------------------------

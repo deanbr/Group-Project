@@ -15,7 +15,7 @@ public class GameBoardModelTest
 {
 
     private GameboardModel board;
-    private Soldier attacker;
+    private GamePiece attacker;
     private GamePiece defender;
 
     /**
@@ -28,8 +28,8 @@ public class GameBoardModelTest
     public void testBattle() {
        // board.setPiece(1, 1, 0, 1); //marshall
        // board.setPiece(1, 2, 1, 5); //captain
-        Soldier marshall = new Soldier(1, 1, 0, 1);
-        Soldier captain = new Soldier(1, 2, 1, 5);
+        GamePiece marshall = new GamePiece(1, 1, 0, 1);
+        GamePiece captain = new GamePiece(1, 2, 1, 5);
 
         assertEquals(1, marshall.battle(marshall, captain));
     }

@@ -98,7 +98,7 @@ public class GameboardModel
      * @param y
      *            The intended y coordinate of the move.
      */
-    public int movement(Soldier mover, int x, int y)
+    public int movement(GamePiece mover, int x, int y)
     {
         int oldX = mover.getX();
         int oldY = mover.getY();
