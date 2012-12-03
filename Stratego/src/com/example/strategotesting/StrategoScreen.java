@@ -37,6 +37,7 @@ public class StrategoScreen
     private Button newGame;
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
+    private boolean newGameWasClickedOnce = false;
 
 
     /**
@@ -202,33 +203,35 @@ public class StrategoScreen
      * @param me is the motion event.
      */
     public void onTouchDown(MotionEvent me) {
-        int x = (int) (me.getX() / cellSize);
-        int y = (int) (me.getY() / cellSize);
-        if (!hasBeenSet && redMove) {
-            playerSetPiece(x, y);
-        }
-        else if (!hasBeenSet && !redMove) {
-            playerSetPiece(x, y);
-         }
-        else if (hasBeenSet && redMove) {
-            if (selectedPieceIsSelected) {
-                movePiece(x, y);
+        if (newGameWasClickedOnce && !model.getIsGameOver()) {
+            int x = (int) (me.getX() / cellSize);
+            int y = (int) (me.getY() / cellSize);
+            if (!hasBeenSet && redMove) {
+                playerSetPiece(x, y);
             }
-            else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
-                if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
-                    selectedPiece =  model.getPiece(x, y);
-                    selectedPieceIsSelected = true;
+            else if (!hasBeenSet && !redMove) {
+                playerSetPiece(x, y);
+            }
+            else if (hasBeenSet && redMove) {
+                if (selectedPieceIsSelected) {
+                    movePiece(x, y);
+                }
+                else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
+                    if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
+                        selectedPiece =  model.getPiece(x, y);
+                        selectedPieceIsSelected = true;
+                    }
                 }
             }
-        }
-        else {
-            if (selectedPieceIsSelected) {
-                movePiece(x, y);
-            }
-            else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
-                if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
-                    selectedPiece = model.getPiece(x, y);
-                    selectedPieceIsSelected = true;
+            else {
+                if (selectedPieceIsSelected) {
+                    movePiece(x, y);
+                }
+                else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
+                    if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
+                        selectedPiece = model.getPiece(x, y);
+                        selectedPieceIsSelected = true;
+                    }
                 }
             }
         }
@@ -240,14 +243,14 @@ public class StrategoScreen
      * @param y is the y position.
      */
     private void playerSetPiece(int x, int y) {
-        if (!redMove && y >= 0 && y <= 3) {
+        if (!redMove && y >= 0 && y <= 3 && model.getPiece(x, y) == null) {
             model.setPiece(x, y, 0, pieceType);
             screenText[x][y].setText(model.getPiece(x, y).toStringShort());
             screenText[x][y].setColor(Color.blue);
             totalSetPieces++;
             isBlueSet();
         }
-        else if (y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
+        else if (redMove && y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
             model.setPiece(x, y, 1, pieceType);
             screenText[x][y].setText(model.getPiece(x, y).toStringShort());
             screenText[x][y].setColor(Color.red);
@@ -340,6 +343,7 @@ public class StrategoScreen
             }
         }
         hasBeenSet = false;
+        newGameWasClickedOnce = true;//this is a simple fix to prevent the game from breaking if the user selects the grid before instantiating the objects.
         Toast.makeText(this, "Red player set your pieces", Toast.LENGTH_SHORT).show();
         isRedSet();
     }

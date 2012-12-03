@@ -99,7 +99,8 @@ public class GamePiece
      * @param defender  The GamePiece object being targeted.
      * @return Returns 1 if the attacker won and -1 if the attacker lost and 5
      *         if there was no battle because the two pieces are team mates. 7
-     *         indicates that the flag has been found and the game is over.
+     *         indicates that the flag has been found and the game is over. 0 if
+     *         tie.
      */
     public int battle(GamePiece attacker, GamePiece defender)
     {

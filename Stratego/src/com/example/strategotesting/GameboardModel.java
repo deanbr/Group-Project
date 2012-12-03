@@ -135,6 +135,8 @@ public class GameboardModel
                 }
                 else
                 {
+                    mover.setX(oldX);
+                    mover.setY(oldY);
                     return -1;
                 }
             }
