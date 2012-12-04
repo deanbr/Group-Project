@@ -15,8 +15,6 @@ public class GameBoardModelTest
 {
 
     private GameboardModel board;
-    private GamePiece attacker;
-    private GamePiece defender;
 
     /**
      * Required setUp method to revert all fields to defaults after each test.
@@ -25,13 +23,17 @@ public class GameBoardModelTest
         board = new GameboardModel();
     }
 
+    /**
+     * Tests a simple battle scenario.
+     */
     public void testBattle() {
-       // board.setPiece(1, 1, 0, 1); //marshall
-       // board.setPiece(1, 2, 1, 5); //captain
-        GamePiece marshall = new GamePiece(1, 1, 0, 1);
-        GamePiece captain = new GamePiece(1, 2, 1, 5);
+        board.setPiece(1, 1, 0, 1); //marshall
+        board.setPiece(1, 2, 1, 5); //captain
+        //GamePiece marshall = new GamePiece(1, 1, 0, 1);
+        //GamePiece captain = new GamePiece(1, 2, 1, 5);
 
-        assertEquals(1, marshall.battle(marshall, captain));
+        assertEquals(1, board.getPiece(1, 1).battle(board.getPiece(1, 1),
+            board.getPiece(1, 2)));
     }
 
 }

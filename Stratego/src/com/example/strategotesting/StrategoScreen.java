@@ -35,6 +35,7 @@ public class StrategoScreen
     private boolean redMove = true;
     private int pieceType = 1;
     private Button newGame;
+    private Button endGame;
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
     private boolean newGameWasClickedOnce = false;
@@ -219,6 +220,7 @@ public class StrategoScreen
                 else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
                     if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
                         selectedPiece =  model.getPiece(x, y);
+                        screenText[x][y].setColor(Color.yellow);
                         selectedPieceIsSelected = true;
                     }
                 }
@@ -230,6 +232,7 @@ public class StrategoScreen
                 else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
                     if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
                         selectedPiece = model.getPiece(x, y);
+                        screenText[x][y].setColor(Color.yellow);
                         selectedPieceIsSelected = true;
                     }
                 }
@@ -307,6 +310,14 @@ public class StrategoScreen
 
             case -1:
                 selectedPieceIsSelected = false;
+                if (redMove)
+                {
+                    screenText[oldX][oldY].setColor(Color.red);
+                }
+                else
+                {
+                    screenText[oldX][oldY].setColor(Color.blue);
+                }
             break;
 
             case -2:
@@ -346,6 +357,14 @@ public class StrategoScreen
         newGameWasClickedOnce = true;//this is a simple fix to prevent the game from breaking if the user selects the grid before instantiating the objects.
         Toast.makeText(this, "Red player set your pieces", Toast.LENGTH_SHORT).show();
         isRedSet();
+    }
+
+    /**
+     * Ends the current game and resets the application.
+     */
+    public void endGameClicked()
+    {
+        initialize();
     }
 
     /**
