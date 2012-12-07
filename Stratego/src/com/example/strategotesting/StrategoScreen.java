@@ -1,5 +1,6 @@
 package com.example.strategotesting;
 
+import android.widget.TextView;
 import java.util.ArrayList;
 import android.widget.Button;
 import android.widget.Toast;
@@ -34,11 +35,14 @@ public class StrategoScreen
     private boolean hasBeenSet;
     private boolean redMove = true;
     private int pieceType = 1;
-    private Button newGame;
-    private Button endGame;
+    //private Button newGame;
+    //private Button endGame;
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
     private boolean newGameWasClickedOnce = false;
+
+    private TextView playerMessage;
+    private TextView teamMessage;
 
 
     /**
@@ -46,6 +50,11 @@ public class StrategoScreen
      * startup.
      */
     public void initialize() {
+        playerMessage = (TextView)findViewById(R.id.playerMessage);
+        playerMessage.setText("");
+        teamMessage = (TextView)findViewById(R.id.teamMessage);
+        teamMessage.setText("");
+
         cellSize = Math.min(this.getWidth(), this.getHeight()) / size;
         screenText = new TextShape[size][size];
 
@@ -55,8 +64,7 @@ public class StrategoScreen
         float y2 = cellSize;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                //This centers the text in the middle of the squre. Do not
-                //mess with it!
+                //This centers the text in the middle of the cell
                 ts = new TextShape("", (x1 + 20f), (y1 + 20f));
                 RectangleShape rs = new RectangleShape(x1, y1, x2, y2);
                 rs.setColor(Color.black);
@@ -80,51 +88,51 @@ public class StrategoScreen
         if (!hasBeenSet) {
             if (totalSetPieces < 1) {
                 pieceType = 1;
-                Toast.makeText(this, "Set your Marshal", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Marshal \n(#1, 1 piece)");
             }
             else if (totalSetPieces < 2) {
                 pieceType = 2;
-                Toast.makeText(this, "Set your General", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your General \n(#2, 1 pieces)");
             }
             else if (totalSetPieces < 4) {
                 pieceType = 3;
-                Toast.makeText(this, "Set your Colonel", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Colonel \n(#3, 2 pieces)");
             }
             else if (totalSetPieces < 7) {
                 pieceType = 4;
-                Toast.makeText(this, "Set your Major", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Major \n(#4, 3 pieces)");
             }
             else if (totalSetPieces < 11) {
                 pieceType = 5;
-                Toast.makeText(this, "Set your Captain", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Captain \n(#5, 4 pieces)");
             }
             else if (totalSetPieces < 15) {
                 pieceType = 6;
-                Toast.makeText(this, "Set your Lieutenant", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Liutenant \n(#6, 4 pieces)");
             }
             else if (totalSetPieces < 19) {
                 pieceType = 7;
-                Toast.makeText(this, "Set your Sergeant", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Sergeant \n(#7, 4 pieces)");
             }
             else if (totalSetPieces < 24) {
                 pieceType = 8;
-                Toast.makeText(this, "Set your Miner", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Miner \n(#8, 5 pieces)");
             }
             else if (totalSetPieces < 32) {
                 pieceType = 9;
-                Toast.makeText(this, "Set your Scout", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Scout \n(#9, 8 pieces)");
             }
             else if (totalSetPieces < 33) {
                 pieceType = 10;
-                Toast.makeText(this, "Set your Spy", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Spy \n(#10, 1 piece)");
             }
             else if (totalSetPieces < 39) {
                 pieceType = 11;
-                Toast.makeText(this, "Set your Bomb", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Bombs \n(6 pieces)");
             }
             else if (totalSetPieces < 40) {
                 pieceType = 12;
-                Toast.makeText(this, "Set your Flag", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Flag");
             }
             else {
                 redMove = false;
@@ -140,57 +148,61 @@ public class StrategoScreen
      * This method is used to set the blue players pieces.
      */
     public void isBlueSet() {
+        teamMessage.setText("Blue Player set your pieces");
         if (!hasBeenSet) {
             if (totalSetPieces < 1) {
                 pieceType = 1;
-                Toast.makeText(this, "Set your Marshal", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Marshal \n(#1, 1 piece)");
             }
             else if (totalSetPieces < 2) {
                 pieceType = 2;
-                Toast.makeText(this, "Set your General", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your General \n(#2, 1 piece)");
             }
             else if (totalSetPieces < 4) {
                 pieceType = 3;
-                Toast.makeText(this, "Set your Colonel", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Colonel \n(#3, 2 pieces)");
             }
             else if (totalSetPieces < 7) {
                 pieceType = 4;
-                Toast.makeText(this, "Set your Major", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Major \n(#4, 3 pieces)");
             }
             else if (totalSetPieces < 11) {
                 pieceType = 5;
-                Toast.makeText(this, "Set your Captain", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Captain \n(#5, 4 pieces)");
             }
             else if (totalSetPieces < 15) {
                 pieceType = 6;
-                Toast.makeText(this, "Set your Lieutenant", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Lieutenant \n(#6, 4 pieces)");
             }
             else if (totalSetPieces < 19) {
                 pieceType = 7;
-                Toast.makeText(this, "Set your Sergeant", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Sergeant \n(#7, 4 pieces)");
             }
             else if (totalSetPieces < 24) {
                 pieceType = 8;
-                Toast.makeText(this, "Set your Miner", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Miner \n(#8, 5 pieces)");
             }
             else if (totalSetPieces < 32) {
                 pieceType = 9;
-                Toast.makeText(this, "Set your Scout", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Scout \n(#9, 8 pieces)");
             }
             else if (totalSetPieces < 33) {
                 pieceType = 10;
-                Toast.makeText(this, "Set your Spy", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Spy \n(1 piece)");
             }
             else if (totalSetPieces < 39) {
                 pieceType = 11;
-                Toast.makeText(this, "Set your Bomb", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Bombs \n(6 bombs)");
             }
             else if (totalSetPieces < 40) {
                 pieceType = 12;
                 Toast.makeText(this, "Set your Flag", Toast.LENGTH_SHORT).show();
+                playerMessage.setText("Set your Flag");
             }
             else {
                 redMove = true;
+                teamMessage.setText("Red's Turn");
+                playerMessage.setText("");
                 coverPieces();
                 unCoverPieces();
                 hasBeenSet = true;
@@ -225,7 +237,7 @@ public class StrategoScreen
                     }
                 }
             }
-            else {
+            else { // if hasBeenSet && !redMove
                 if (selectedPieceIsSelected) {
                     movePiece(x, y);
                 }
@@ -337,9 +349,11 @@ public class StrategoScreen
     public void switchTurn() {
         if (redMove) {
             redMove = false;
+            teamMessage.setText("Blue's Turn");
         }
         else {
             redMove = true;
+            teamMessage.setText("Red's Turn");
         }
     }
 
@@ -353,9 +367,15 @@ public class StrategoScreen
                 screenText[i][j].setText(" ");
             }
         }
+        //screenText = new TextShape[10][10];
         hasBeenSet = false;
-        newGameWasClickedOnce = true;//this is a simple fix to prevent the game from breaking if the user selects the grid before instantiating the objects.
-        Toast.makeText(this, "Red player set your pieces", Toast.LENGTH_SHORT).show();
+        newGameWasClickedOnce = true;
+        totalSetPieces = 0;
+        redMove = true;
+        /*this is a simple fix to prevent the game from breaking if the
+         * user selects the grid before instantiating the objects.
+        */
+        teamMessage.setText("Red player set your pieces");
         isRedSet();
     }
 
@@ -364,7 +384,14 @@ public class StrategoScreen
      */
     public void endGameClicked()
     {
-        initialize();
+        model = new GameboardModel();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                screenText[i][j].setText(" ");
+            }
+        }
+        playerMessage.setText("");
+        teamMessage.setText("");
     }
 
     /**

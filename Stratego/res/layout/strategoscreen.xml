@@ -9,6 +9,25 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
+    
+     <TextView
+        android:id="@+id/teamMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/playerMessage"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:text="Player's Team" />
+    
+    <TextView
+        android:id="@+id/playerMessage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newGame"
+        android:gravity="center"
+        android:layout_marginBottom="25dp"
+        android:textSize="25dp"
+        android:text="ENTER TEXT" />
 
     <Button
         android:id="@+id/newGame"
