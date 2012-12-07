@@ -109,7 +109,16 @@ public class GameboardModel
             {
                 if (board[x][y].getRank() == 9)
                 {
-
+                    for (int i = oldX; i < x; i++)
+                    {
+                        for (int j = oldY; j < y; j++)
+                        {
+                            if (board[i][j] != null)
+                            {
+                                movement(mover, i, j);
+                            }
+                        }
+                    }
                 }
                 int battleResult = mover.battle(mover, board[x][y]);
                 if (battleResult == 1)
