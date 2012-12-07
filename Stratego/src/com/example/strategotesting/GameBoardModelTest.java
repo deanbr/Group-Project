@@ -23,6 +23,9 @@ public class GameBoardModelTest
         board = new GameboardModel();
     }
 
+    /**
+     * Tests pieces being set and removed from the arraylist of pieces.
+     */
     public void testSetAndRemovePieces()
     {
         board.setPiece(1, 1, 0, 1);
@@ -31,8 +34,10 @@ public class GameBoardModelTest
         assertEquals(1, board.getPiece(1, 1).getX());
         assertEquals(1, board.getPiece(1, 1).getY());
         assertEquals(1, board.returnBluePieces().size());
-        board.setPiece(2, 2, 1, 4);
+        board.setPiece(2, 1, 1, 4);
         assertEquals(1, board.returnRedPieces().size());
+        board.movement(board.getPiece(1, 1), 2, 1);
+        assertNull(board.returnRedPieces().size());
 
     }
 
@@ -89,11 +94,12 @@ public class GameBoardModelTest
         board.setPiece(9, 9, 1, 12);
         board.setPiece(1, 7, 1, 4);
         board.setPiece(0, 7, 0, 4);
+        board.setPiece(9, 8, 0, 9);
         assertEquals(-1, board.movement(board.getPiece(4, 4), 3, 3));
         assertEquals(0, board.movement(board.getPiece(4, 4), 3, 4));
         assertEquals(-1, board.movement(board.getPiece(2, 2), 5, 5));
         assertEquals(0, board.movement(board.getPiece(2, 2), 2, 5));
-        assertEquals(-2, board.movement(board.getPiece(2, 2), 2, 7));
+        assertEquals(-2, board.movement(board.getPiece(2, 5), 2, 7));
         assertEquals(-1, board.movement(board.getPiece(8, 8), 8, 9));
         assertEquals(-1, board.movement(board.getPiece(9, 9), 8, 9));
         assertEquals(1, board.movement(board.getPiece(1, 7), 0, 7));
