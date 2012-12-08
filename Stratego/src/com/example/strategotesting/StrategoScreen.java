@@ -1,5 +1,13 @@
 package com.example.strategotesting;
 
+import android.graphics.RectF;
+import android.widget.ImageView;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.graphics.ImageFormat;
+import java.io.InputStream;
+import sofia.graphics.Image;
+import sofia.graphics.ImageShape;
 import android.widget.TextView;
 import java.util.ArrayList;
 import android.widget.Button;
@@ -16,6 +24,9 @@ import sofia.app.ShapeScreen;
  * This is the GUI of our stratego project.
  * 0 is Blue team
  * 1 is Red team
+ *
+ * Credit to http://www.edcollins.com/stratego/stratego-rules-later.htm
+ * for the images for all of the pieces.
  *
  *  @author J
  *  @version Dec 1, 2012
@@ -43,6 +54,8 @@ public class StrategoScreen
 
     private TextView playerMessage;
     private TextView teamMessage;
+    private ImageShape[][] screenImages;
+    private ImageShape screenImage;
 
 
     /**
@@ -57,6 +70,7 @@ public class StrategoScreen
 
         cellSize = Math.min(this.getWidth(), this.getHeight()) / size;
         screenText = new TextShape[size][size];
+        screenImages = new ImageShape[size][size];
 
         float x1 = 0;
         float y1 = 0;
@@ -66,12 +80,19 @@ public class StrategoScreen
             for (int j = 0; j < size; j++) {
                 //This centers the text in the middle of the cell
                 ts = new TextShape("", (x1 + 20f), (y1 + 20f));
+
+                screenImage = new ImageShape("blank", new RectF(x1, y1, x2, y2));
+
                 RectangleShape rs = new RectangleShape(x1, y1, x2, y2);
                 rs.setColor(Color.black);
                 y1 += cellSize;
                 y2 += cellSize;
                 screenText[i][j] = ts;
-                add(ts);
+                screenImages[i][j] = screenImage;
+
+                add(screenImage);
+
+                //add(ts);
                 add(rs);
             }
             x1 += cellSize;
@@ -260,15 +281,19 @@ public class StrategoScreen
     private void playerSetPiece(int x, int y) {
         if (!redMove && y >= 0 && y <= 3 && model.getPiece(x, y) == null) {
             model.setPiece(x, y, 0, pieceType);
-            screenText[x][y].setText(model.getPiece(x, y).toStringShort());
-            screenText[x][y].setColor(Color.blue);
+
+            screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+            screenImages[x][y].setColor(Color.blue);
+
             totalSetPieces++;
             isBlueSet();
         }
         else if (redMove && y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
             model.setPiece(x, y, 1, pieceType);
-            screenText[x][y].setText(model.getPiece(x, y).toStringShort());
-            screenText[x][y].setColor(Color.red);
+
+            screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+            screenImages[x][y].setColor(Color.red);
+
             totalSetPieces++;
             isRedSet();
         }
@@ -297,9 +322,10 @@ public class StrategoScreen
         }
         switch (res) {
             case 0:
-                screenText[oldX][oldY].setText("");
-                screenText[x][y].setText(model.getPiece(x, y).toStringShort());
-                screenText[x][y].setColor(textColor);
+                screenImages[oldX][oldY].setImage("blank");
+                screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+                screenImages[x][y].setColor(textColor);
+
                 if (model.getIsGameOver()) {
                     Toast.makeText(this, "Game Over!", Toast.LENGTH_LONG).show();
                     switchTurn();
@@ -313,8 +339,8 @@ public class StrategoScreen
             break;
 
             case 1:
-                screenText[oldX][oldY].setText("");
-                screenText[x][y].setText("");
+                screenImages[oldX][oldY].setImage("blank");
+                screenImages[x][y].setImage("blank");
                 switchTurn();
                 coverPieces();
                 unCoverPieces();
@@ -324,16 +350,16 @@ public class StrategoScreen
                 selectedPieceIsSelected = false;
                 if (redMove)
                 {
-                    screenText[oldX][oldY].setColor(Color.red);
+                    screenImages[oldX][oldY].setColor(Color.red);
                 }
                 else
                 {
-                    screenText[oldX][oldY].setColor(Color.blue);
+                    screenImages[oldX][oldY].setColor(Color.blue);
                 }
             break;
 
             case -2:
-                screenText[oldX][oldY].setText("");
+                screenImages[oldX][oldY].setImage("blank");
                 switchTurn();
                 coverPieces();
                 unCoverPieces();
@@ -364,10 +390,10 @@ public class StrategoScreen
         model = new GameboardModel();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                screenText[i][j].setText(" ");
+                screenImages[i][j].setImage("blank");
             }
         }
-        //screenText = new TextShape[10][10];
+            //screenText = new TextShape[10][10];
         hasBeenSet = false;
         newGameWasClickedOnce = true;
         totalSetPieces = 0;
@@ -387,7 +413,7 @@ public class StrategoScreen
         model = new GameboardModel();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                screenText[i][j].setText(" ");
+                screenImages[i][j].setImage("blank");
             }
         }
         playerMessage.setText("");
@@ -395,24 +421,24 @@ public class StrategoScreen
     }
 
     /**
-     * This method covers the pieces of the player whose turn it is not.
+     * This method covers the pieces of the player whose isn't playing that turn.
      */
     public void coverPieces() {
         String team;
         Color textColor;
         if (redMove) {
             piecesToCover = model.returnBluePieces();
-            team = "Blu";
+            team = "backblue";
             textColor = Color.blue;
         }
         else {
             piecesToCover = model.returnRedPieces();
-            team = "Red";
+            team = "backred";
             textColor = Color.red;
         }
         for (int i = 0; i < piecesToCover.size(); i++) {
-            screenText[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setText(team);
-            screenText[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setColor(textColor);
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(team);
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setColor(textColor);
         }
     }
 
@@ -429,7 +455,7 @@ public class StrategoScreen
         String piece;
         for (int i = 0; i < piecesToCover.size(); i++) {
             piece = piecesToCover.get(i).toStringShort();
-            screenText[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setText(piece);
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(piecesToCover.get(i).toString().toLowerCase());
         }
     }
 }
