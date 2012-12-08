@@ -37,9 +37,9 @@ public class StrategoScreen
 
     private float cellSize;
     private int size = 10;
-    private TextShape[][] screenText;
+    //private TextShape[][] screenText;
     private GameboardModel model;
-    private TextShape ts;
+    //private TextShape ts;
     private ArrayList<GamePiece> piecesToCover;
 
     private int totalSetPieces = 0;
@@ -56,6 +56,8 @@ public class StrategoScreen
     private TextView teamMessage;
     private ImageShape[][] screenImages;
     private ImageShape screenImage;
+    private RectangleShape rs;
+    private RectangleShape[][] boardCells;
 
 
     /**
@@ -69,8 +71,8 @@ public class StrategoScreen
         teamMessage.setText("");
 
         cellSize = Math.min(this.getWidth(), this.getHeight()) / size;
-        screenText = new TextShape[size][size];
         screenImages = new ImageShape[size][size];
+        boardCells = new RectangleShape[size][size];
 
         float x1 = 0;
         float y1 = 0;
@@ -79,21 +81,22 @@ public class StrategoScreen
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 //This centers the text in the middle of the cell
-                ts = new TextShape("", (x1 + 20f), (y1 + 20f));
+                //ts = new TextShape("", (x1 + 20f), (y1 + 20f));
 
                 screenImage = new ImageShape("blank", new RectF(x1, y1, x2, y2));
 
-                RectangleShape rs = new RectangleShape(x1, y1, x2, y2);
+                rs = new RectangleShape(x1, y1, x2, y2);
                 rs.setColor(Color.black);
                 y1 += cellSize;
                 y2 += cellSize;
-                screenText[i][j] = ts;
                 screenImages[i][j] = screenImage;
+                boardCells[i][j] = rs;
 
+                add(rs);
                 add(screenImage);
 
                 //add(ts);
-                add(rs);
+
             }
             x1 += cellSize;
             x2 += cellSize;
@@ -217,7 +220,6 @@ public class StrategoScreen
             }
             else if (totalSetPieces < 40) {
                 pieceType = 12;
-                Toast.makeText(this, "Set your Flag", Toast.LENGTH_SHORT).show();
                 playerMessage.setText("Set your Flag");
             }
             else {
@@ -253,7 +255,8 @@ public class StrategoScreen
                 else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
                     if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
                         selectedPiece =  model.getPiece(x, y);
-                        screenText[x][y].setColor(Color.yellow);
+                        //screenText[x][y].setColor(Color.yellow);
+                        screenImages[x][y].setColor(Color.yellow);
                         selectedPieceIsSelected = true;
                     }
                 }
@@ -265,7 +268,8 @@ public class StrategoScreen
                 else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
                     if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
                         selectedPiece = model.getPiece(x, y);
-                        screenText[x][y].setColor(Color.yellow);
+                        //screenText[x][y].setColor(Color.yellow);
+                        screenImages[x][y].setColor(Color.yellow);
                         selectedPieceIsSelected = true;
                     }
                 }
@@ -283,7 +287,10 @@ public class StrategoScreen
             model.setPiece(x, y, 0, pieceType);
 
             screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
-            screenImages[x][y].setColor(Color.blue);
+            screenImages[x][y].setColor(Color.lightBlue);
+            boardCells[x][y].setFilled(true);
+            boardCells[x][y].setFillColor(Color.lightBlue);
+
 
             totalSetPieces++;
             isBlueSet();
@@ -293,6 +300,8 @@ public class StrategoScreen
 
             screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
             screenImages[x][y].setColor(Color.red);
+            boardCells[x][y].setFilled(true);
+            boardCells[x][y].setFillColor(Color.red);
 
             totalSetPieces++;
             isRedSet();
@@ -326,6 +335,15 @@ public class StrategoScreen
                 screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
                 screenImages[x][y].setColor(textColor);
 
+                boardCells[oldX][oldY].setFilled(false);
+                boardCells[x][y].setFilled(true);
+                if(textColor.equals(Color.blue)) {
+                    boardCells[x][y].setFillColor(Color.lightBlue);
+                }
+                else {
+                    boardCells[x][y].setFillColor(Color.red);
+                }
+
                 if (model.getIsGameOver()) {
                     Toast.makeText(this, "Game Over!", Toast.LENGTH_LONG).show();
                     switchTurn();
@@ -341,6 +359,8 @@ public class StrategoScreen
             case 1:
                 screenImages[oldX][oldY].setImage("blank");
                 screenImages[x][y].setImage("blank");
+                boardCells[oldX][oldY].setFilled(false);
+                boardCells[x][y].setFilled(false);
                 switchTurn();
                 coverPieces();
                 unCoverPieces();
@@ -351,15 +371,20 @@ public class StrategoScreen
                 if (redMove)
                 {
                     screenImages[oldX][oldY].setColor(Color.red);
+                    boardCells[oldX][oldY].setFilled(true);
+                    boardCells[oldX][oldY].setFillColor(Color.red);
                 }
                 else
                 {
-                    screenImages[oldX][oldY].setColor(Color.blue);
+                    screenImages[oldX][oldY].setColor(Color.lightBlue);
+                    boardCells[oldX][oldY].setFilled(true);
+                    boardCells[oldX][oldY].setFillColor(Color.lightBlue);
                 }
             break;
 
             case -2:
                 screenImages[oldX][oldY].setImage("blank");
+                boardCells[oldX][oldY].setFilled(false);
                 switchTurn();
                 coverPieces();
                 unCoverPieces();
@@ -391,6 +416,7 @@ public class StrategoScreen
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 screenImages[i][j].setImage("blank");
+                boardCells[i][j].setFilled(false);
             }
         }
             //screenText = new TextShape[10][10];
@@ -414,6 +440,7 @@ public class StrategoScreen
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 screenImages[i][j].setImage("blank");
+                boardCells[i][j].setFilled(false);
             }
         }
         playerMessage.setText("");
@@ -429,7 +456,7 @@ public class StrategoScreen
         if (redMove) {
             piecesToCover = model.returnBluePieces();
             team = "backblue";
-            textColor = Color.blue;
+            textColor = Color.lightBlue;
         }
         else {
             piecesToCover = model.returnRedPieces();
@@ -439,6 +466,8 @@ public class StrategoScreen
         for (int i = 0; i < piecesToCover.size(); i++) {
             screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(team);
             screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setColor(textColor);
+            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setFilled(true);
+            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setFillColor(textColor);
         }
     }
 
