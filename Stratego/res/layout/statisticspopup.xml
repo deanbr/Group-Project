@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/statisticspopup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#444"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/blueStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="57dp"
+        android:layout_marginTop="65dp"
+        android:text="TextView" 
+        android:textColor="#000"/>
+
+    <TextView
+        android:id="@+id/popupTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="Game Statistics"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/redStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/blueStats"
+        android:layout_alignBottom="@+id/blueStats"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/popupTitle"
+        android:text="TextView"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/closeStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="27dp"
+        android:layout_toLeftOf="@+id/blueStats"
+        android:gravity="center"
+        android:text="close" 
+        android:background="@android:color/transparent"
+        />
+
+</RelativeLayout>
