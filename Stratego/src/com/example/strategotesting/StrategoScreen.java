@@ -1,5 +1,12 @@
 package com.example.strategotesting;
 
+import android.content.Context;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.PopupWindow;
 import android.graphics.RectF;
 import android.widget.ImageView;
 import android.graphics.BitmapFactory;
@@ -46,7 +53,8 @@ public class StrategoScreen
     private boolean hasBeenSet;
     private boolean redMove = true;
     private int pieceType = 1;
-
+    //private Button newGame;
+    //private Button endGame;
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
     private boolean newGameWasClickedOnce = false;
@@ -102,15 +110,6 @@ public class StrategoScreen
             y1 = 0;
             y2 = cellSize;
         }
-    }
-
-    /**
-     * Allows access to the model.
-     * @return the model
-     */
-    public GameboardModel getModel()
-    {
-        return model;
     }
 
     /**
@@ -456,6 +455,14 @@ public class StrategoScreen
     }
 
     /**
+     * Calls the StatisticsPopUp class to display a pop up window with
+     * game statistics.
+     */
+    /*public void statisticsPopUpClicked() {
+        System.out.println("IMMA ROLL OVER YOU BEEEEAAATCH!");
+    }*/
+
+    /**
      * This method covers the pieces of the player whose isn't playing that turn.
      */
     public void coverPieces() {
@@ -495,4 +502,50 @@ public class StrategoScreen
             screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(piecesToCover.get(i).toString().toLowerCase());
         }
     }
+
+    /**
+     * Allows access to the model.
+     * @return The gameboard model
+     */
+    public GameboardModel getModel()
+    {
+        return model;
+    }
+
+    private PopupWindow pw;
+    private TextView blueStats;
+    private TextView redStats;
+    private Button cancelPopUp;
+    // ----------------------------------------------------------
+    /**
+     * When clicked, it launches pop up window above the board using the
+     * layout in statisticspopup.xml
+     */
+    public void statisticsPopUpClicked() {
+        try {
+            LayoutInflater inflater = (LayoutInflater) StrategoScreen.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View layout = inflater.inflate(R.layout.statisticspopup,
+                    (ViewGroup) findViewById(R.id.statisticspopup));
+            // sets dimensions of window
+            pw = new PopupWindow(layout, 300, 470, true);
+            // centers window
+            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            // set values of fields within window
+            redStats = (TextView) layout.findViewById(R.id.redStats);
+            blueStats = (TextView) layout.findViewById(R.id.blueStats);
+            cancelPopUp = (Button) layout.findViewById(R.id.closeStats);
+            cancelPopUp.setOnClickListener(closePopUp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private OnClickListener closePopUp = new OnClickListener() {
+        public void onClick(View v) {
+            pw.dismiss();
+        }
+    };
+
 }
