@@ -46,8 +46,7 @@ public class StrategoScreen
     private boolean hasBeenSet;
     private boolean redMove = true;
     private int pieceType = 1;
-    //private Button newGame;
-    //private Button endGame;
+
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
     private boolean newGameWasClickedOnce = false;
