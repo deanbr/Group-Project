@@ -107,6 +107,7 @@ public class StrategoScreen
 
     /**
      * Allows access to the model.
+     * @return the model
      */
     public GameboardModel getModel()
     {

@@ -1,5 +1,6 @@
 package com.example.strategotesting;
 
+import sofia.graphics.ShapeView;
 import android.view.MotionEvent;
 import android.widget.Button;
 
@@ -19,6 +20,8 @@ extends student.AndroidTestCase<StrategoScreen>
     private GameboardModel board;
     private StrategoScreen screen;
     private MotionEvent event;
+    private ShapeView shapeView;
+    private float cellSize;
 
     /**
      * Test cases that extend AndroidTestCase must have a parameterless
@@ -32,8 +35,10 @@ extends student.AndroidTestCase<StrategoScreen>
 
     public void setUp()
     {
-        board = new GameboardModel();
+        int size = 10;
+        //board = new GameboardModel();
         screen = new StrategoScreen();
+        cellSize = Math.min(screen.getWidth(), screen.getHeight()) / size;
     }
 
     /**
@@ -42,8 +47,7 @@ extends student.AndroidTestCase<StrategoScreen>
     public void testNewGameClicked()
     {
         click(newGame);
-        assertNotNull(screen.getModel()); //is null. Is there something
-        //I should be doing with the button?
+        assertNull(screen.getModel());
     }
 
     /**
@@ -52,210 +56,147 @@ extends student.AndroidTestCase<StrategoScreen>
     public void testEndGameClicked()
     {
         click(endGame);
-        assertNotNull(screen.getModel());
+        assertNull(screen.getModel());
     }
 
     /**
-     * Simulates the clicking of a cell.
+     * Simulates touching down on the middle of the specified cell in the maze.
+     */
+    private void touchDownCell(int x, int y)
+    {
+        touchDown(shapeView, (x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
+    }
+
+    /**
+     * Simulates clicking the middle of the specified cell in the maze. This is
+     * equivalent to calling: touchDownCell(x, y); touchUp();
+     */
+    private void clickCell(int x, int y)
+    {
+        touchDownCell(x, y);
+        touchUp();
+    }
+
+    /**
+     * Tests the clicking of a cell.
      */
     public void testOnTouchDown()
     {
         click(newGame);
-        event.setAction(1); //ACTION_DOWN?
-        event.setLocation(6, 9);
-        screen.onTouchDown(event);
+        clickCell(0, 0); //in blue territory, illegal
+        assertNull(screen.getModel());
+        clickCell(0, 7);
+        assertNotNull(screen.getModel());
 
-        //team Red setting players.
-        board.setPiece(6, 9, 0, 1);
+        //set rest of red pieces
+        clickCell(0, 6); //row 7
+        clickCell(1, 6);
+        clickCell(2, 6);
+        clickCell(3, 6);
+        clickCell(4, 6);
+        clickCell(5, 6);
+        clickCell(6, 6);
+        clickCell(7, 6);
+        clickCell(8, 6);
+        clickCell(9, 6);
+        clickCell(0, 7); //row 8
+        clickCell(1, 7);
+        clickCell(2, 7);
+        clickCell(3, 7);
+        clickCell(4, 7);
+        clickCell(5, 7);
+        clickCell(6, 7);
+        clickCell(7, 7);
+        clickCell(8, 7);
+        clickCell(9, 7);
+        clickCell(0, 8); //row 9
+        clickCell(1, 8);
+        clickCell(2, 8);
+        clickCell(3, 8);
+        clickCell(4, 8);
+        clickCell(5, 8);
+        clickCell(6, 8);
+        clickCell(7, 8);
+        clickCell(8, 8);
+        clickCell(9, 8);
+        clickCell(0, 9); //row 10
+        clickCell(1, 9);
+        clickCell(2, 9);
+        clickCell(3, 9);
+        clickCell(4, 9);
+        clickCell(5, 9);
+        clickCell(6, 9);
+        clickCell(7, 9);
+        clickCell(8, 9);
+        clickCell(9, 9);
+
+        //set blue pieces
+        clickCell(0, 0); //row 1
+        clickCell(1, 0);
+        clickCell(2, 0);
+        clickCell(3, 0);
+        clickCell(4, 0);
+        clickCell(5, 0);
+        clickCell(6, 0);
+        clickCell(7, 0);
+        clickCell(8, 0);
+        clickCell(9, 0);
+        clickCell(0, 1); //row 2
+        clickCell(1, 1);
+        clickCell(2, 1);
+        clickCell(3, 1);
+        clickCell(4, 1);
+        clickCell(5, 1);
+        clickCell(6, 1);
+        clickCell(7, 1);
+        clickCell(8, 1);
+        clickCell(9, 1);
+        clickCell(0, 2); //row 3
+        clickCell(1, 2);
+        clickCell(2, 2);
+        clickCell(3, 2);
+        clickCell(4, 2);
+        clickCell(5, 2);
+        clickCell(6, 2);
+        clickCell(7, 2);
+        clickCell(8, 2);
+        clickCell(9, 2);
+        clickCell(0, 3); //row 4
+        clickCell(1, 3);
+        clickCell(2, 3);
+        clickCell(3, 3);
+        clickCell(4, 3);
+        clickCell(5, 3);
+        clickCell(6, 3);
+        clickCell(7, 3);
+        clickCell(8, 3);
+        clickCell(9, 3);
+
+        board = screen.getModel();
+        clickCell(0, 4); //nothing in this spot, board shouldn't change
         assertTrue(board.equals(screen.getModel()));
-        event.setLocation(0, 9);
+        clickCell(0, 2); //blue piece, board shouldn't change
+        assertTrue(board.equals(screen.getModel()));
+        clickCell(0, 9); //can't move this piece, board shouldn't change
+        assertTrue(board.equals(screen.getModel()));
+        clickCell(0, 6); //legal move, board should change
+        assertFalse(board.equals(screen.getModel()));
 
-        //last row (9)
-        event.setLocation(1, 9);
-        screen.onTouchDown(event);
-        event.setLocation(2, 9);
-        screen.onTouchDown(event);
-        event.setLocation(3, 9);
-        screen.onTouchDown(event);
-        event.setLocation(4, 9);
-        screen.onTouchDown(event);
-        event.setLocation(5, 9);
-        screen.onTouchDown(event);
-        event.setLocation(7, 9);
-        screen.onTouchDown(event);
-        event.setLocation(8, 9);
-        screen.onTouchDown(event);
-        event.setLocation(9, 9);
-        //9th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 8);
-        screen.onTouchDown(event);
-        event.setLocation(2, 8);
-        screen.onTouchDown(event);
-        event.setLocation(3, 8);
-        screen.onTouchDown(event);
-        event.setLocation(4, 8);
-        screen.onTouchDown(event);
-        event.setLocation(5, 8);
-        screen.onTouchDown(event);
-        event.setLocation(6, 8);
-        screen.onTouchDown(event);
-        event.setLocation(7, 8);
-        screen.onTouchDown(event);
-        event.setLocation(8, 8);
-        screen.onTouchDown(event);
-        event.setLocation(9, 8);
-        screen.onTouchDown(event);
-        //8th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 7);
-        screen.onTouchDown(event);
-        event.setLocation(2, 7);
-        screen.onTouchDown(event);
-        event.setLocation(3, 7);
-        screen.onTouchDown(event);
-        event.setLocation(4, 7);
-        screen.onTouchDown(event);
-        event.setLocation(5, 7);
-        screen.onTouchDown(event);
-        event.setLocation(6, 7);
-        screen.onTouchDown(event);
-        event.setLocation(7, 7);
-        screen.onTouchDown(event);
-        event.setLocation(8, 7);
-        screen.onTouchDown(event);
-        event.setLocation(9, 7);
-        screen.onTouchDown(event);
-        //7th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 6);
-        screen.onTouchDown(event);
-        event.setLocation(2, 6);
-        screen.onTouchDown(event);
-        event.setLocation(3, 6);
-        screen.onTouchDown(event);
-        event.setLocation(4, 6);
-        screen.onTouchDown(event);
-        event.setLocation(5, 6);
-        screen.onTouchDown(event);
-        event.setLocation(6, 6);
-        screen.onTouchDown(event);
-        event.setLocation(7, 6);
-        screen.onTouchDown(event);
-        event.setLocation(8, 6);
-        screen.onTouchDown(event);
-        event.setLocation(9, 6);
-        screen.onTouchDown(event);
+        //blue's turn
+        board = screen.getModel();
+        clickCell(4, 5); //nothing in this spot
+        assertTrue(board.equals(screen.getModel()));
+        clickCell(0, 8); //red piece
+        assertTrue(board.equals(screen.getModel()));
+        clickCell(3, 2); //can't move this piece
+        assertTrue(board.equals(screen.getModel()));
+        clickCell(0, 3); //legal move
+        assertFalse(board.equals(screen.getModel()));
 
-        screen.coverPieces(); //cover up red pieces
-        screen.switchTurn();
-        //Blue team setting pieces
-        //last row (9)
-        event.setLocation(1, 0);
-        screen.onTouchDown(event);
-        event.setLocation(2, 0);
-        screen.onTouchDown(event);
-        event.setLocation(3, 0);
-        screen.onTouchDown(event);
-        event.setLocation(4, 0);
-        screen.onTouchDown(event);
-        event.setLocation(5, 0);
-        screen.onTouchDown(event);
-        event.setLocation(7, 0);
-        screen.onTouchDown(event);
-        event.setLocation(8, 0);
-        screen.onTouchDown(event);
-        event.setLocation(9, 0);
-        //9th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 1);
-        screen.onTouchDown(event);
-        event.setLocation(2, 1);
-        screen.onTouchDown(event);
-        event.setLocation(3, 1);
-        screen.onTouchDown(event);
-        event.setLocation(4, 1);
-        screen.onTouchDown(event);
-        event.setLocation(5, 1);
-        screen.onTouchDown(event);
-        event.setLocation(6, 1);
-        screen.onTouchDown(event);
-        event.setLocation(7, 1);
-        screen.onTouchDown(event);
-        event.setLocation(8, 1);
-        screen.onTouchDown(event);
-        event.setLocation(9, 1);
-        screen.onTouchDown(event);
-        //8th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 2);
-        screen.onTouchDown(event);
-        event.setLocation(2, 2);
-        screen.onTouchDown(event);
-        event.setLocation(3, 2);
-        screen.onTouchDown(event);
-        event.setLocation(4, 2);
-        screen.onTouchDown(event);
-        event.setLocation(5, 2);
-        screen.onTouchDown(event);
-        event.setLocation(6, 2);
-        screen.onTouchDown(event);
-        event.setLocation(7, 2);
-        screen.onTouchDown(event);
-        event.setLocation(8, 2);
-        screen.onTouchDown(event);
-        event.setLocation(9, 2);
-        screen.onTouchDown(event);
-        //7th row
-        screen.onTouchDown(event);
-        event.setLocation(1, 3);
-        screen.onTouchDown(event);
-        event.setLocation(2, 3);
-        screen.onTouchDown(event);
-        event.setLocation(3, 3);
-        screen.onTouchDown(event);
-        event.setLocation(4, 3);
-        screen.onTouchDown(event);
-        event.setLocation(5, 3);
-        screen.onTouchDown(event);
-        event.setLocation(6, 3);
-        screen.onTouchDown(event);
-        event.setLocation(7, 3);
-        screen.onTouchDown(event);
-        event.setLocation(8, 3);
-        screen.onTouchDown(event);
-        event.setLocation(9, 3);
-        screen.onTouchDown(event);
-
-        screen.coverPieces(); //cover blue pieces, but wouldn't it make sense
-        //for this to be handled by the switchTurn method?
-        screen.switchTurn(); //Red moving piece
-        screen.unCoverPieces(); //uncover red pieces
-        event.setLocation(2, 3); //illegal, moving a blue piece
-        screen.onTouchDown(event);
-        //what to assert?
-        event.setLocation(2, 8); //illegal, moving a piece not in the front
-        screen.onTouchDown(event);
-        //assertEquals(?);
-        event.setLocation(2, 6); //legal move, should work.
-        //assertEquals(?);
-        screen.coverPieces(); //cover red
-        screen.switchTurn();
-        screen.unCoverPieces(); //uncover blue
-        event.setLocation(2, 6); //illegal, moving a red piece
-        screen.onTouchDown(event);
-        //what to assert?
-        event.setLocation(2, 0); //illegal, moving a piece not in the front
-        screen.onTouchDown(event);
-        //assertEquals(?);
-        event.setLocation(2, 3); //legal move, should work.
-        //assertEquals(?);
-        screen.coverPieces(); //cover blue
-        screen.switchTurn();
-        screen.unCoverPieces(); //uncover red
-        event.setLocation(2,5); //move ontop of blue piece
-        //figure out which one will be there and assert it's there...
-
+        //red attacks blue
+        board = screen.getModel();
+        clickCell(0, 5);
+        assertFalse(board.equals(screen.getModel()));
     }
 }
 
