@@ -1,5 +1,7 @@
 package com.example.strategotesting;
 
+import android.os.Handler;
+import java.util.Timer;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,12 +10,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.PopupWindow;
 import android.graphics.RectF;
-import android.widget.ImageView;
-import android.graphics.BitmapFactory;
-import android.graphics.Bitmap;
-import android.graphics.ImageFormat;
-import java.io.InputStream;
-import sofia.graphics.Image;
 import sofia.graphics.ImageShape;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 import android.view.MotionEvent;
 import sofia.graphics.RectangleShape;
 import sofia.graphics.Color;
-import sofia.graphics.TextShape;
 import sofia.app.ShapeScreen;
 
 /**
@@ -53,8 +48,6 @@ public class StrategoScreen
     private boolean hasBeenSet;
     private boolean redMove = true;
     private int pieceType = 1;
-    //private Button newGame;
-    //private Button endGame;
     private GamePiece selectedPiece;
     private boolean selectedPieceIsSelected = false;
     private boolean newGameWasClickedOnce = false;
@@ -65,7 +58,7 @@ public class StrategoScreen
     private ImageShape screenImage;
     private RectangleShape rs;
     private RectangleShape[][] boardCells;
-
+    private boolean canMove = true;//This  boolean is used to prevent the user from moving during the wait period between turns.
 
     /**
      * This method is run initially. It does very little other than some base
@@ -87,23 +80,15 @@ public class StrategoScreen
         float y2 = cellSize;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                //This centers the text in the middle of the cell
-                //ts = new TextShape("", (x1 + 20f), (y1 + 20f));
-
                 screenImage = new ImageShape("blank", new RectF(x1, y1, x2, y2));
-
                 rs = new RectangleShape(x1, y1, x2, y2);
                 rs.setColor(Color.black);
                 y1 += cellSize;
                 y2 += cellSize;
                 screenImages[i][j] = screenImage;
                 boardCells[i][j] = rs;
-
                 add(rs);
                 add(screenImage);
-
-                //add(ts);
-
             }
             x1 += cellSize;
             x2 += cellSize;
@@ -246,38 +231,38 @@ public class StrategoScreen
      * @param me is the motion event.
      */
     public void onTouchDown(MotionEvent me) {
-        if (newGameWasClickedOnce && !model.getIsGameOver()) {
-            int x = (int) (me.getX() / cellSize);
-            int y = (int) (me.getY() / cellSize);
-            if (!hasBeenSet && redMove) {
-                playerSetPiece(x, y);
-            }
-            else if (!hasBeenSet && !redMove) {
-                playerSetPiece(x, y);
-            }
-            else if (hasBeenSet && redMove) {
-                if (selectedPieceIsSelected) {
-                    movePiece(x, y);
+        if (canMove) {
+            if (newGameWasClickedOnce && !model.getIsGameOver()) {
+                int x = (int) (me.getX() / cellSize);
+                int y = (int) (me.getY() / cellSize);
+                if (!hasBeenSet && redMove) {
+                    playerSetPiece(x, y);
                 }
-                else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
-                    if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
-                        selectedPiece =  model.getPiece(x, y);
-                        //screenText[x][y].setColor(Color.yellow);
-                        screenImages[x][y].setColor(Color.yellow);
-                        selectedPieceIsSelected = true;
+                else if (!hasBeenSet && !redMove) {
+                    playerSetPiece(x, y);
+                }
+                else if (hasBeenSet && redMove) {
+                    if (selectedPieceIsSelected) {
+                        movePiece(x, y);
+                    }
+                    else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
+                        if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
+                            selectedPiece =  model.getPiece(x, y);
+                            screenImages[x][y].setColor(Color.yellow);
+                            selectedPieceIsSelected = true;
+                        }
                     }
                 }
-            }
-            else { // if hasBeenSet && !redMove
-                if (selectedPieceIsSelected) {
-                    movePiece(x, y);
-                }
-                else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
-                    if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
-                        selectedPiece = model.getPiece(x, y);
-                        //screenText[x][y].setColor(Color.yellow);
-                        screenImages[x][y].setColor(Color.yellow);
-                        selectedPieceIsSelected = true;
+                else { // if hasBeenSet && !redMove
+                    if (selectedPieceIsSelected) {
+                        movePiece(x, y);
+                    }
+                    else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
+                        if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
+                            selectedPiece = model.getPiece(x, y);
+                            screenImages[x][y].setColor(Color.yellow);
+                            selectedPieceIsSelected = true;
+                        }
                     }
                 }
             }
@@ -359,7 +344,8 @@ public class StrategoScreen
                 else {
                     switchTurn();
                     coverPieces();
-                    unCoverPieces();
+                    waitSon();
+                    //unCoverPieces();
                 }
             break;
 
@@ -370,7 +356,8 @@ public class StrategoScreen
                 boardCells[x][y].setFilled(false);
                 switchTurn();
                 coverPieces();
-                unCoverPieces();
+                waitSon();
+                //unCoverPieces();
             break;
 
             case -1:
@@ -394,11 +381,24 @@ public class StrategoScreen
                 boardCells[oldX][oldY].setFilled(false);
                 switchTurn();
                 coverPieces();
-                unCoverPieces();
+                waitSon();
+                //unCoverPieces();
             break;
         }
         selectedPieceIsSelected = false;
 
+    }
+
+    protected void waitSon() {
+        canMove = false;
+        new Handler().postDelayed(new Runnable(){
+            public void run()
+            {
+                unCoverPieces();
+                canMove = true;
+            }
+          }
+          , 7000);
     }
 
     /**
@@ -407,6 +407,7 @@ public class StrategoScreen
     public void switchTurn() {
         if (redMove) {
             redMove = false;
+
             teamMessage.setText("Blue's Turn");
         }
         else {
@@ -547,5 +548,4 @@ public class StrategoScreen
             pw.dismiss();
         }
     };
-
 }

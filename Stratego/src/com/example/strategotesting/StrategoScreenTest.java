@@ -42,7 +42,7 @@ extends student.AndroidTestCase<StrategoScreen>
     /**
      * Simulates the clicking of the button New Game.
      */
-    /**public void testNewGameClicked()
+    public void testNewGameClicked()
     {
         click(newGame);
         assertNull(getScreen().getModel().getPiece(0, 0));
@@ -51,7 +51,7 @@ extends student.AndroidTestCase<StrategoScreen>
     /**
      * Simulates the clicking of the button End Game.
      */
-    /**public void testEndGameClicked()
+    public void testEndGameClicked()
     {
         click(endGame);
         assertNull(getScreen().getModel().getPiece(0, 0));
@@ -157,13 +157,17 @@ extends student.AndroidTestCase<StrategoScreen>
         GamePiece temp = getScreen().getModel().getPiece(0, 6);
         clickCell(0, 6);//Red move
         clickCell(0, 5);
+
         assertEquals(temp, getScreen().getModel().getPiece(0, 5));
+        waitingFoYouSon();
 
         clickCell(0, 3);//Blue move
         clickCell(0, 4);
+        waitingFoYouSon();
 
         clickCell(0, 5);//Red Move assaulting a lower level he will win.
         clickCell(0, 4);
+        waitingFoYouSon();
 
         temp = getScreen().getModel().getPiece(0, 2);
         clickCell(0, 2);//Blue trying to move to a space already occupied by blue
@@ -171,63 +175,91 @@ extends student.AndroidTestCase<StrategoScreen>
         assertNotSame(temp, getScreen().getModel().getPiece(0, 1));
         clickCell(0, 2);
         clickCell(0, 3);
+        waitingFoYouSon();
 
         clickCell(0, 4);//Red Move again assaulting blue piece.
         clickCell(0, 3);//Will win again.
+        waitingFoYouSon();
         clickCell(0, 1);//Blue Move
         clickCell(0, 2);
+        waitingFoYouSon();
         clickCell(0, 3);//Red Move
         clickCell(0, 4);
+        waitingFoYouSon();
         clickCell(0, 2);//Blue Move
         clickCell(0, 3);
+        waitingFoYouSon();
         clickCell(0, 4);//Red Move
         clickCell(1, 4);
+        waitingFoYouSon();
         clickCell(0, 3);//Blue Move
         clickCell(0, 4);
+        waitingFoYouSon();
         clickCell(1, 4);//Red Move
         clickCell(2, 4);
+        waitingFoYouSon();
         clickCell(0, 4);//Blue move
         clickCell(1, 4);
+        waitingFoYouSon();
         clickCell(2, 4);//Red move
         clickCell(3, 4);
+        waitingFoYouSon();
         clickCell(1, 4);//Blue move
         clickCell(2, 4);
+        waitingFoYouSon();
         clickCell(3, 4);//Red move
         clickCell(4, 4);
+        waitingFoYouSon();
         clickCell(2, 4);//Blue Move
         clickCell(3, 4);
+        waitingFoYouSon();
         clickCell(4, 4);//Red move
         clickCell(5, 4);
+        waitingFoYouSon();
         clickCell(3, 4);//Blue move
         clickCell(4, 4);
+        waitingFoYouSon();
         clickCell(5, 4);//Red Move
         clickCell(6, 4);
+        waitingFoYouSon();
         clickCell(4, 4);//Blue move
         clickCell(5, 4);
+        waitingFoYouSon();
         clickCell(6, 4);//Red move
         clickCell(7, 4);
+        waitingFoYouSon();
         clickCell(5, 4);//Blue move
         clickCell(6, 4);
+        waitingFoYouSon();
         clickCell(7, 4);//Red move
         clickCell(8, 4);
+        waitingFoYouSon();
         clickCell(6, 4);//Blue move
         clickCell(7, 4);
+        waitingFoYouSon();
         clickCell(8, 4);//Red move
         clickCell(9, 4);
+        waitingFoYouSon();
         //Now red is set to take the flag, but first test mine interaction.
 
         clickCell(0, 0);//Blue move
         clickCell(0, 1);
+        waitingFoYouSon();
         clickCell(3, 6);//Red Move
         clickCell(3, 5);
+        waitingFoYouSon();
         clickCell(0, 1);//Blue move
         clickCell(0, 2);
+        waitingFoYouSon();
         clickCell(3, 5);//Red move
         clickCell(3, 4);
+        waitingFoYouSon();
         clickCell(0, 2);//Blue move
         clickCell(0, 3);
+        waitingFoYouSon();
         clickCell(3, 4);//Red moves to mine and loses.
         clickCell(3, 3);
+        waitingFoYouSon();
         assertNull(getScreen().getModel().getPiece(3, 4));
         assertEquals("Bomb", getScreen().getModel().getPiece(3, 3).toString());
 
@@ -237,6 +269,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(0, 3);
         clickCell(0, 4);
         assertEquals(temp, getScreen().getModel().getPiece(0, 4));
+        waitingFoYouSon();
 
         clickCell(9, 4);//Red move
         clickCell(9, 3);//Takes flag for the win.
@@ -259,5 +292,18 @@ extends student.AndroidTestCase<StrategoScreen>
     {
         touchDownCell(x, y);
         touchUp();
+    }
+
+    /**
+     * This method is necessary for GUI tests to run as we have a wait function
+     * built into the GUI that prevents moves for a certain period of time, so
+     * the user may switch.
+     */
+    private void waitingFoYouSon() {
+        try {
+            java.lang.Thread.currentThread().sleep(7000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
