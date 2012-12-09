@@ -28,6 +28,7 @@ public class GameBoardModelTest
      */
     public void testSetAndRemovePieces()
     {
+        assertNull(board.returnBluePieces());
         board.setPiece(1, 1, 0, 1);
         assertEquals(1, board.getPiece(1, 1).getRank());
         assertEquals(0, board.getPiece(1, 1).getTeam());
@@ -37,7 +38,7 @@ public class GameBoardModelTest
         board.setPiece(2, 1, 1, 4);
         assertEquals(1, board.returnRedPieces().size());
         board.movement(board.getPiece(1, 1), 2, 1);
-        assertNull(board.returnRedPieces().size());
+        assertNull(board.returnRedPieces());
 
     }
 
@@ -99,7 +100,8 @@ public class GameBoardModelTest
         assertEquals(0, board.movement(board.getPiece(4, 4), 3, 4));
         assertEquals(-1, board.movement(board.getPiece(2, 2), 5, 5));
         assertEquals(0, board.movement(board.getPiece(2, 2), 2, 5));
-        assertEquals(-2, board.movement(board.getPiece(2, 5), 2, 7));
+        assertEquals(-1, board.movement(board.getPiece(2, 5), 2, 7));
+        assertEquals(-2, board.movement(board.getPiece(2, 5), 2, 6));
         assertEquals(-1, board.movement(board.getPiece(8, 8), 8, 9));
         assertEquals(-1, board.movement(board.getPiece(9, 9), 8, 9));
         assertEquals(1, board.movement(board.getPiece(1, 7), 0, 7));

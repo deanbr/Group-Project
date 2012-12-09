@@ -11,11 +11,11 @@ import java.util.ArrayList;
  */
 public class GameboardModel
 {
-    private GamePiece[][] board;
-    private ArrayList<GamePiece>   bluePieces;
-    private ArrayList<GamePiece>   redPieces;
-    private int           size = 10;
-    private boolean       isGameOver;
+    private GamePiece[][]        board;
+    private ArrayList<GamePiece> bluePieces;
+    private ArrayList<GamePiece> redPieces;
+    private int                  size = 10;
+    private boolean              isGameOver;
 
 
     // ----------------------------------------------------------
@@ -33,38 +33,50 @@ public class GameboardModel
 
     /**
      * Sets a piece on the board in the set up of the game.
+     *
      * @return True if the set is successful, false if it is not.
-     * @param x The desired x coordinate of the piece.
-     * @param y The desired y coordinate of the piece.
-     * @param team The team of the piece.
-     * @param rank The rank of the piece.
+     * @param x
+     *            The desired x coordinate of the piece.
+     * @param y
+     *            The desired y coordinate of the piece.
+     * @param team
+     *            The team of the piece.
+     * @param rank
+     *            The rank of the piece.
      */
     public boolean setPiece(int x, int y, int team, int rank)
     {
         GamePiece newPiece;
-        if (rank == 9) {
+        if (rank == 9)
+        {
             newPiece = new Scout(x, y, team);
         }
-        else if (rank == 10) {
+        else if (rank == 10)
+        {
             newPiece = new Spy(x, y, team);
         }
-        else if (rank == 11) {
+        else if (rank == 11)
+        {
             newPiece = new Bomb(x, y, team);
         }
-        else if (rank == 12) {
+        else if (rank == 12)
+        {
             newPiece = new Flag(x, y, team);
         }
-        else {
+        else
+        {
             newPiece = new GamePiece(x, y, team, rank);
         }
 
         if (board[x][y] == null)
         {
             board[x][y] = newPiece;
-            if(team == 0) {
+            if (team == 0)
+            {
                 bluePieces.add(newPiece);
             }
-            else {
+            else
+            {
                 redPieces.add(newPiece);
             }
             return true;
@@ -75,15 +87,21 @@ public class GameboardModel
         }
     }
 
+
     /**
      * This method returns the piece at the location.
-     * @param x is the x location.
-     * @param y is the y location.
+     *
+     * @param x
+     *            is the x location.
+     * @param y
+     *            is the y location.
      * @return is the GamePiece at the location.
      */
-    public GamePiece getPiece(int x, int y) {
+    public GamePiece getPiece(int x, int y)
+    {
         return board[x][y];
     }
+
 
     /**
      * Handles the movement on the gameboard.
@@ -103,23 +121,28 @@ public class GameboardModel
         int oldX = mover.getX();
         int oldY = mover.getY();
         int result = mover.move(x, y);
+        if (mover.getRank() == 9)
+        {
+            for (int i = oldX; i < x; i++)
+            {
+                for (int j = oldY; j < y; j++)
+                {
+                    if (board[i][j] != null)
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
         if (result == 0)
         {
             if (board[x][y] != null)
             {
-                if (board[x][y].getRank() == 9)
-                {
-                    for (int i = oldX; i < x; i++)
-                    {
-                        for (int j = oldY; j < y; j++)
-                        {
-                            if (board[i][j] != null)
-                            {
-                                movement(mover, i, j);
-                            }
-                        }
-                    }
-                }
+                /*
+                 * if (board[x][y].getRank() == 9) { for (int i = oldX; i < x;
+                 * i++) { for (int j = oldY; j < y; j++) { if (board[i][j] !=
+                 * null) { x = i; y = j; } } } }
+                 */
                 int battleResult = mover.battle(mover, board[x][y]);
                 if (battleResult == 1)
                 {
@@ -142,7 +165,8 @@ public class GameboardModel
                     board[oldX][oldY] = null;
                     return 1;
                 }
-                else if (battleResult == 7) {
+                else if (battleResult == 7)
+                {
                     isGameOver = true;
                     return 0;
                 }
@@ -166,20 +190,28 @@ public class GameboardModel
         }
     }
 
+
     /**
      * This method removes an object from the piece arraylists so it will
      * properly update the board.
-     * @param x is the x location.
-     * @param y is the y location.
+     *
+     * @param x
+     *            is the x location.
+     * @param y
+     *            is the y location.
      */
-    private void removeFromPieceArrays(int x, int y) {
-        if (bluePieces.contains(board[x][y])) {
+    private void removeFromPieceArrays(int x, int y)
+    {
+        if (bluePieces.contains(board[x][y]))
+        {
             bluePieces.remove(board[x][y]);
         }
-        else {
+        else
+        {
             redPieces.remove(board[x][y]);
         }
     }
+
 
     /**
      * Simulates the battle mechanic. Accepts the attacking piece and the
@@ -208,6 +240,7 @@ public class GameboardModel
 
     /**
      * Returns true if the game ends.
+     *
      * @return if the game ends.
      */
     public boolean getIsGameOver()
@@ -215,28 +248,38 @@ public class GameboardModel
         return isGameOver;
     }
 
+
     /**
      * This method returns the arraylist containing the bluepieces.
+     *
      * @return is the list of pieces
      */
-    public ArrayList<GamePiece> returnBluePieces(){
-        if (bluePieces.size() != 0) {
+    public ArrayList<GamePiece> returnBluePieces()
+    {
+        if (bluePieces.size() != 0)
+        {
             return bluePieces;
         }
-        else {
+        else
+        {
             return null;
         }
     }
 
+
     /**
      * This method returns the arraylist containing the red pieces.
+     *
      * @return is the list of pieces.
      */
-    public ArrayList<GamePiece> returnRedPieces(){
-        if (redPieces.size() != 0) {
+    public ArrayList<GamePiece> returnRedPieces()
+    {
+        if (redPieces.size() != 0)
+        {
             return redPieces;
         }
-        else {
+        else
+        {
             return null;
         }
     }
