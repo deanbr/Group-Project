@@ -106,6 +106,14 @@ public class StrategoScreen
     }
 
     /**
+     * Allows access to the model.
+     */
+    public GameboardModel getModel()
+    {
+        return model;
+    }
+
+    /**
      * This method is used to set the red players pieces.
      */
     public void isRedSet() {
