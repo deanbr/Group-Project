@@ -1,7 +1,6 @@
 package com.example.strategotesting;
 
 import android.os.Handler;
-import java.util.Timer;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,9 +38,7 @@ public class StrategoScreen
 
     private float cellSize;
     private int size = 10;
-    //private TextShape[][] screenText;
     private GameboardModel model;
-    //private TextShape ts;
     private ArrayList<GamePiece> piecesToCover;
 
     private int totalSetPieces = 0;
@@ -344,8 +341,7 @@ public class StrategoScreen
                 else {
                     switchTurn();
                     coverPieces();
-                    waitSon();
-                    //unCoverPieces();
+                    waitTime();
                 }
             break;
 
@@ -356,8 +352,7 @@ public class StrategoScreen
                 boardCells[x][y].setFilled(false);
                 switchTurn();
                 coverPieces();
-                waitSon();
-                //unCoverPieces();
+                waitTime();
             break;
 
             case -1:
@@ -381,15 +376,17 @@ public class StrategoScreen
                 boardCells[oldX][oldY].setFilled(false);
                 switchTurn();
                 coverPieces();
-                waitSon();
-                //unCoverPieces();
+                waitTime();
             break;
         }
         selectedPieceIsSelected = false;
 
     }
 
-    protected void waitSon() {
+    /**
+     * This method is used to give the players a short amount of time to switch.
+     */
+    protected void waitTime() {
         canMove = false;
         new Handler().postDelayed(new Runnable(){
             public void run()
@@ -454,14 +451,6 @@ public class StrategoScreen
         playerMessage.setText("");
         teamMessage.setText("");
     }
-
-    /**
-     * Calls the StatisticsPopUp class to display a pop up window with
-     * game statistics.
-     */
-    /*public void statisticsPopUpClicked() {
-        System.out.println("IMMA ROLL OVER YOU BEEEEAAATCH!");
-    }*/
 
     /**
      * This method covers the pieces of the player whose isn't playing that turn.

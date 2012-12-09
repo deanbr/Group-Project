@@ -152,11 +152,6 @@ public class GamePiece
         else if (newx == (this.getX() - 1) || newx == (this.getX() + 1) ||
             newy == (this.getY() - 1) || newy == (this.getY() + 1)){
 
-           /* if(board[newx][newy] != -1) {
-                battle = new Battle(this, b)
-            }
-            */
-
             this.setX(newx);
             this.setY(newy);
             return 0;

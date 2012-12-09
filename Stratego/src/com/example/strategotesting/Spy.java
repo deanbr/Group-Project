@@ -4,7 +4,9 @@ package com.example.strategotesting;
  * // -------------------------------------------------------------------------
 /**
  * This is the spy game piece class. Note that the battle method is different
- * as a spy can defeat a Marshal.
+ * as a spy can defeat a Marshal. This class could be removed, unfortunately
+ * it had legacy code that was removed later it is here now to avoid type
+ * errors.
  *
  *  @author J
  *  @version Nov 10, 2012
@@ -22,24 +24,4 @@ public class Spy extends GamePiece
         super(x, y, team, 10);
     }
 
-   /* @Override
-    public int battle(int enemyRank, int enemyX, int enemyY) {
-        if(enemyX != getX() && enemyY != getY()) {
-            return -1;
-        }
-        else if (enemyRank == 10) {
-            move(enemyX, enemyY);
-            return 0;
-        }
-        else if (enemyRank > getRank()) {
-            return -2;
-        }
-        else if (enemyRank == getRank()) {
-            return -3;
-        }
-        else {
-            move(enemyX, enemyY);
-            return 0;
-        }
-    }*/
 }

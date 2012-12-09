@@ -168,11 +168,6 @@ public class GameboardModel
         {
             if (board[x][y] != null)
             {
-                /*
-                 * if (board[x][y].getRank() == 9) { for (int i = oldX; i < x;
-                 * i++) { for (int j = oldY; j < y; j++) { if (board[i][j] !=
-                 * null) { x = i; y = j; } } } }
-                 */
                 int battleResult = mover.battle(mover, board[x][y]);
                 if (battleResult == 1)
                 {
@@ -241,32 +236,6 @@ public class GameboardModel
             redPieces.remove(board[x][y]);
         }
     }
-
-
-    /**
-     * Simulates the battle mechanic. Accepts the attacking piece and the
-     * defending piece and returns a "win," "tie," or "loss."
-     *
-     * @param attacker
-     *            The attacking GamePiece object.
-     * @param defender
-     *            The GamePiece object being targeted.
-     * @return Returns 1 if the attacker won and -1 if the attacker lost and 0
-     *         if there was no battle because the two pieces are team mates.
-     */
-    /*
-     * public int battle(GamePiece attacker, GamePiece defender) { if
-     * (attacker.getTeam() == defender.getTeam()) { return 5; } else if
-     * (attacker.getRank() > 9 || defender.getRank() > 9) { // spy attacking
-     * marshal if (attacker.getRank() == 10 && defender.getRank() == 1) { return
-     * 1; } // flag is discovered else if (defender.getRank() == 12) { return 1;
-     * } // miner attacking bomb else if (attacker.getRank() == 8 &&
-     * defender.getRank() == 11) { return 1; // win } } else if
-     * (attacker.getRank() < defender.getRank()) { return 1; } else if
-     * (attacker.getRank() == defender.getRank()) { return 0; } return -1; }
-     */
-
-    // ----------------------------------------------------------
 
     /**
      * Returns true if the game ends.
