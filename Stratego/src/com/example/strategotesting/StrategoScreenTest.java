@@ -15,13 +15,11 @@ public class StrategoScreenTest
 extends student.AndroidTestCase<StrategoScreen>
 {
     //~ Fields ----------------------------------------------------------
-    private Button newGame;
-    private Button endGame;
     private GameboardModel board;
-    private StrategoScreen screen;
-    private MotionEvent event;
     private ShapeView shapeView;
     private float cellSize;
+    private Button newGame;
+    private Button endGame;
 
     /**
      * Test cases that extend AndroidTestCase must have a parameterless
@@ -33,48 +31,30 @@ extends student.AndroidTestCase<StrategoScreen>
         super(StrategoScreen.class);
     }
 
+    /**
+     *
+     */
     public void setUp()
     {
-        int size = 10;
-        //board = new GameboardModel();
-        screen = new StrategoScreen();
-        cellSize = Math.min(screen.getWidth(), screen.getHeight()) / size;
+        cellSize = Math.min(getScreen().getWidth(), getScreen().getHeight()) / 10;
     }
 
     /**
      * Simulates the clicking of the button New Game.
      */
-    public void testNewGameClicked()
+    /**public void testNewGameClicked()
     {
         click(newGame);
-        assertNull(screen.getModel());
+        assertNull(getScreen().getModel().getPiece(0, 0));
     }
 
     /**
      * Simulates the clicking of the button End Game.
      */
-    public void testEndGameClicked()
+    /**public void testEndGameClicked()
     {
         click(endGame);
-        assertNull(screen.getModel());
-    }
-
-    /**
-     * Simulates touching down on the middle of the specified cell in the maze.
-     */
-    private void touchDownCell(int x, int y)
-    {
-        touchDown(shapeView, (x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
-    }
-
-    /**
-     * Simulates clicking the middle of the specified cell in the maze. This is
-     * equivalent to calling: touchDownCell(x, y); touchUp();
-     */
-    private void clickCell(int x, int y)
-    {
-        touchDownCell(x, y);
-        touchUp();
+        assertNull(getScreen().getModel().getPiece(0, 0));
     }
 
     /**
@@ -84,9 +64,7 @@ extends student.AndroidTestCase<StrategoScreen>
     {
         click(newGame);
         clickCell(0, 0); //in blue territory, illegal
-        assertNull(screen.getModel());
-        clickCell(0, 7);
-        assertNotNull(screen.getModel());
+        assertNull(getScreen().getModel().getPiece(0, 0));//RED CAN'T SET THERE
 
         //set rest of red pieces
         clickCell(0, 6); //row 7
@@ -129,10 +107,13 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 9);
         clickCell(8, 9);
         clickCell(9, 9);
+        assertEquals("Flag", getScreen().getModel().getPiece(9, 9).toString());
 
         //set blue pieces
         clickCell(0, 0); //row 1
+        clickCell(0, 0); //Tries to set piece in occupied place.
         clickCell(1, 0);
+        assertNotSame("General", getScreen().getModel().getPiece(0, 0).toString());
         clickCell(2, 0);
         clickCell(3, 0);
         clickCell(4, 0);
@@ -171,32 +152,112 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 3);
         clickCell(8, 3);
         clickCell(9, 3);
+        assertEquals("Bomb", getScreen().getModel().getPiece(8, 3).toString());
 
-        board = screen.getModel();
-        clickCell(0, 4); //nothing in this spot, board shouldn't change
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(0, 2); //blue piece, board shouldn't change
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(0, 9); //can't move this piece, board shouldn't change
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(0, 6); //legal move, board should change
-        assertFalse(board.equals(screen.getModel()));
-
-        //blue's turn
-        board = screen.getModel();
-        clickCell(4, 5); //nothing in this spot
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(0, 8); //red piece
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(3, 2); //can't move this piece
-        assertTrue(board.equals(screen.getModel()));
-        clickCell(0, 3); //legal move
-        assertFalse(board.equals(screen.getModel()));
-
-        //red attacks blue
-        board = screen.getModel();
+        GamePiece temp = getScreen().getModel().getPiece(0, 6);
+        clickCell(0, 6);//Red move
         clickCell(0, 5);
-        assertFalse(board.equals(screen.getModel()));
+        assertEquals(temp, getScreen().getModel().getPiece(0, 5));
+
+        clickCell(0, 3);//Blue move
+        clickCell(0, 4);
+
+        clickCell(0, 5);//Red Move assaulting a lower level he will win.
+        clickCell(0, 4);
+
+        temp = getScreen().getModel().getPiece(0, 2);
+        clickCell(0, 2);//Blue trying to move to a space already occupied by blue
+        clickCell(0, 1);// it will not work.
+        assertNotSame(temp, getScreen().getModel().getPiece(0, 1));
+        clickCell(0, 2);
+        clickCell(0, 3);
+
+        clickCell(0, 4);//Red Move again assaulting blue piece.
+        clickCell(0, 3);//Will win again.
+        clickCell(0, 1);//Blue Move
+        clickCell(0, 2);
+        clickCell(0, 3);//Red Move
+        clickCell(0, 4);
+        clickCell(0, 2);//Blue Move
+        clickCell(0, 3);
+        clickCell(0, 4);//Red Move
+        clickCell(1, 4);
+        clickCell(0, 3);//Blue Move
+        clickCell(0, 4);
+        clickCell(1, 4);//Red Move
+        clickCell(2, 4);
+        clickCell(0, 4);//Blue move
+        clickCell(1, 4);
+        clickCell(2, 4);//Red move
+        clickCell(3, 4);
+        clickCell(1, 4);//Blue move
+        clickCell(2, 4);
+        clickCell(3, 4);//Red move
+        clickCell(4, 4);
+        clickCell(2, 4);//Blue Move
+        clickCell(3, 4);
+        clickCell(4, 4);//Red move
+        clickCell(5, 4);
+        clickCell(3, 4);//Blue move
+        clickCell(4, 4);
+        clickCell(5, 4);//Red Move
+        clickCell(6, 4);
+        clickCell(4, 4);//Blue move
+        clickCell(5, 4);
+        clickCell(6, 4);//Red move
+        clickCell(7, 4);
+        clickCell(5, 4);//Blue move
+        clickCell(6, 4);
+        clickCell(7, 4);//Red move
+        clickCell(8, 4);
+        clickCell(6, 4);//Blue move
+        clickCell(7, 4);
+        clickCell(8, 4);//Red move
+        clickCell(9, 4);
+        //Now red is set to take the flag, but first test mine interaction.
+
+        clickCell(0, 0);//Blue move
+        clickCell(0, 1);
+        clickCell(3, 6);//Red Move
+        clickCell(3, 5);
+        clickCell(0, 1);//Blue move
+        clickCell(0, 2);
+        clickCell(3, 5);//Red move
+        clickCell(3, 4);
+        clickCell(0, 2);//Blue move
+        clickCell(0, 3);
+        clickCell(3, 4);//Red moves to mine and loses.
+        clickCell(3, 3);
+        assertNull(getScreen().getModel().getPiece(3, 4));
+        assertEquals("Bomb", getScreen().getModel().getPiece(3, 3).toString());
+
+        temp = getScreen().getModel().getPiece(0, 3);
+        clickCell(0, 3);//Blue move
+        clickCell(9, 9);//Illegal square selected piece reset.
+        clickCell(0, 3);
+        clickCell(0, 4);
+        assertEquals(temp, getScreen().getModel().getPiece(0, 4));
+
+        clickCell(9, 4);//Red move
+        clickCell(9, 3);//Takes flag for the win.
+        assertEquals(true, getScreen().getModel().getIsGameOver());
+    }
+
+    /**
+     * Simulates touching down on the middle of the specified cell in the maze.
+     */
+    private void touchDownCell(int x, int y)
+    {
+        touchDown(shapeView, (x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
+    }
+
+    /**
+     * Simulates clicking the middle of the specified cell in the maze. This is
+     * equivalent to calling: touchDownCell(x, y); touchUp();
+     */
+    private void clickCell(int x, int y)
+    {
+        touchDownCell(x, y);
+        touchUp();
     }
 }
-
