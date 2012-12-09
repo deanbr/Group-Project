@@ -120,20 +120,50 @@ public class GameboardModel
     {
         int oldX = mover.getX();
         int oldY = mover.getY();
-        int result = mover.move(x, y);
+        int result;
         if (mover.getRank() == 9)
         {
-            for (int i = oldX; i < x; i++)
-            {
-                for (int j = oldY; j < y; j++)
+            int movedCoord;
+            int finalDestination;
+            boolean movedCoordIsX = true;
+            if((x == oldX && y != oldY)) {
+                movedCoord = oldY;
+                finalDestination = y;
+                movedCoordIsX = false;
+            }
+            else {
+                movedCoord = oldX;
+                finalDestination = x;
+            }
+            if(finalDestination < movedCoord) {
+                int temp = movedCoord;
+                movedCoord = finalDestination;
+                finalDestination = temp;
+            }
+            else {
+                movedCoord++;
+                finalDestination++;
+            }
+            if(movedCoordIsX) {
+                for (int i = movedCoord; i < finalDestination; i++)
                 {
-                    if (board[i][j] != null)
+                    if (board[i][y] != null)
+                    {
+                        return -1;
+                    }
+                }
+            }
+            else {
+                for (int j = movedCoord; j < finalDestination; j++)
+                {
+                    if (board[x][j] != null)
                     {
                         return -1;
                     }
                 }
             }
         }
+        result = mover.move(x, y);
         if (result == 0)
         {
             if (board[x][y] != null)
