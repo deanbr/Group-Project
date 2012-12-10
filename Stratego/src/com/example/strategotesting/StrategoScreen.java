@@ -29,7 +29,10 @@ import sofia.app.ShapeScreen;
  * Credit to http://www.edcollins.com/stratego/stratego-rules-later.htm
  * for the images for all of the pieces.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Dec 1, 2012
  */
 public class StrategoScreen

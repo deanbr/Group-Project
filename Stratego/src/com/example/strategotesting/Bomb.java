@@ -5,7 +5,10 @@ package com.example.strategotesting;
 /**
  * This is the Bomb class, a subclass of GamePiece.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Nov 11, 2012
  */
 public class Bomb extends GamePiece

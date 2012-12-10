@@ -5,7 +5,10 @@ package com.example.strategotesting;
 /**
  * This is the generic super class of all gamepieces.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Dec 2, 2012
  */
 public class GamePiece

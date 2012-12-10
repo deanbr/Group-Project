@@ -4,7 +4,10 @@ package com.example.strategotesting;
  * // -------------------------------------------------------------------------
  * /** The test class for the GameboardModel class which tests its methods.
  *
- * @author Brandon
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  * @version Nov 26, 2012
  */
 

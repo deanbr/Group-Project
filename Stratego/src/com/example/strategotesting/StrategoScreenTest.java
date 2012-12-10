@@ -7,7 +7,10 @@ import android.widget.Button;
 /**
  *  Tests that the {@link StrategoScreen} class works properly.
  *
- *  @author Jamie
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Dec 7, 2012
  */
 public class StrategoScreenTest

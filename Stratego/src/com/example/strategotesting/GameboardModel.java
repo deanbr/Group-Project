@@ -6,7 +6,10 @@ import java.util.ArrayList;
 /**
  * The model for the board based on a 2D GamePiece array.
  *
- * @author Brandon Dean, Jordan Sablan, Matt Morrison, Jaime Dalrymple
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  * @version Nov 10, 2012
  */
 public class GameboardModel

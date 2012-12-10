@@ -5,7 +5,10 @@ package com.example.strategotesting;
 /**
  * This is the flag game piece, a subclass of the GamePiece class.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Nov 11, 2012
  */
 public class Flag extends GamePiece

@@ -6,7 +6,10 @@ package com.example.strategotesting;
  * This is the scout game piece, note that the move method allows movement in
  * for more than 1 square.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Nov 11, 2012
  */
 public class Scout extends GamePiece

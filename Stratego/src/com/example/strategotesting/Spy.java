@@ -8,7 +8,10 @@ package com.example.strategotesting;
  * it had legacy code that was removed later it is here now to avoid type
  * errors.
  *
- *  @author J
+ * @author Jordan sablan (jordans9)
+ * @author Brandon Dean (deanbr)
+ * @author Jamie Dalrymple (jamied93)
+ * @author Matt Morrison (mattm512)
  *  @version Nov 10, 2012
  */
 public class Spy extends GamePiece
