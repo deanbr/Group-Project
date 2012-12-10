@@ -42,7 +42,7 @@ extends student.AndroidTestCase<StrategoScreen>
     /**
      * Simulates the clicking of the button New Game.
      */
-   /** public void testNewGameClicked()
+    public void testNewGameClicked()
     {
         click(newGame);
         assertNull(getScreen().getModel().getPiece(0, 0));
@@ -51,7 +51,7 @@ extends student.AndroidTestCase<StrategoScreen>
     /**
      * Simulates the clicking of the button End Game.
      */
-    /**public void testEndGameClicked()
+    public void testEndGameClicked()
     {
         click(endGame);
         assertNull(getScreen().getModel().getPiece(0, 0));
@@ -271,16 +271,113 @@ extends student.AndroidTestCase<StrategoScreen>
         assertEquals(temp, getScreen().getModel().getPiece(0, 4));
         waitToMove();
 
-        /**clickCell(7, 6);//Red Move
-        clickCell(7, 5);
-        clickCell(7, 4);//Blue Move
-        clickCell(7, 5);//Tie battle both pieces gone.
-        assertNull(getScreen().getModel().getPiece(7, 5));//Spot where red was and blue attacked.
-        assertNull(getScreen().getModel().getPiece(7, 4));//Blue's spot.**/
-
         clickCell(9, 4);//Red move
         clickCell(9, 3);//Takes flag for the win.
         assertEquals(true, getScreen().getModel().getIsGameOver());
+    }
+
+    /**
+     * This method tests if there is a tie.
+     */
+    public void testTieScenario() {
+        click(newGame);
+
+        //set rest of red pieces
+        clickCell(0, 6); //row 7
+        clickCell(1, 6);
+        clickCell(2, 6);
+        clickCell(3, 6);
+        clickCell(4, 6);
+        clickCell(5, 6);
+        clickCell(6, 6);
+        clickCell(7, 6);
+        clickCell(8, 6);
+        clickCell(9, 6);
+        clickCell(0, 7); //row 8
+        clickCell(1, 7);
+        clickCell(2, 7);
+        clickCell(3, 7);
+        clickCell(4, 7);
+        clickCell(5, 7);
+        clickCell(6, 7);
+        clickCell(7, 7);
+        clickCell(8, 7);
+        clickCell(9, 7);
+        clickCell(0, 8); //row 9
+        clickCell(1, 8);
+        clickCell(2, 8);
+        clickCell(3, 8);
+        clickCell(4, 8);
+        clickCell(5, 8);
+        clickCell(6, 8);
+        clickCell(7, 8);
+        clickCell(8, 8);
+        clickCell(9, 8);
+        clickCell(0, 9); //row 10
+        clickCell(1, 9);
+        clickCell(2, 9);
+        clickCell(3, 9);
+        clickCell(4, 9);
+        clickCell(5, 9);
+        clickCell(6, 9);
+        clickCell(7, 9);
+        clickCell(8, 9);
+        clickCell(9, 9);
+
+        //set blue pieces
+        clickCell(0, 3); //Marshal
+        clickCell(0, 0); //Tries to set piece in occupied place.
+        clickCell(1, 0);
+        clickCell(2, 0);
+        clickCell(3, 0);
+        clickCell(4, 0);
+        clickCell(5, 0);
+        clickCell(6, 0);
+        clickCell(7, 0);
+        clickCell(8, 0);
+        clickCell(9, 0);
+        clickCell(0, 1); //row 2
+        clickCell(1, 1);
+        clickCell(2, 1);
+        clickCell(3, 1);
+        clickCell(4, 1);
+        clickCell(5, 1);
+        clickCell(6, 1);
+        clickCell(7, 1);
+        clickCell(8, 1);
+        clickCell(9, 1);
+        clickCell(0, 2); //row 3
+        clickCell(1, 2);
+        clickCell(2, 2);
+        clickCell(3, 2);
+        clickCell(4, 2);
+        clickCell(5, 2);
+        clickCell(6, 2);
+        clickCell(7, 2);
+        clickCell(8, 2);
+        clickCell(9, 2);
+        clickCell(0, 0); //row 4
+        clickCell(1, 3);
+        clickCell(2, 3);
+        clickCell(3, 3);
+        clickCell(4, 3);
+        clickCell(5, 3);
+        clickCell(6, 3);
+        clickCell(7, 3);
+        clickCell(8, 3);
+        clickCell(9, 3);
+
+        clickCell(0, 6);//Red move
+        clickCell(0, 5);
+        waitToMove();
+        clickCell(0, 3);//Blue Move
+        clickCell(0, 4);
+        waitToMove();
+        clickCell(0, 5);//Red move to attack same piece of blues will be tie
+        clickCell(0, 4);//Tie
+        waitToMove();
+        assertNull(getScreen().getModel().getPiece(0, 4));
+        assertNull(getScreen().getModel().getPiece(0, 5));
     }
 
     /**
