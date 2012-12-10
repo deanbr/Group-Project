@@ -502,7 +502,7 @@ public class StrategoScreen
         return model;
     }
 
-    private PopupWindow pw;
+    private PopupWindow popup;
     private TextView blueStats;
     private TextView redStats;
     private Button cancelPopUp;
@@ -519,12 +519,28 @@ public class StrategoScreen
             View layout = inflater.inflate(R.layout.statisticspopup,
                     (ViewGroup) findViewById(R.id.statisticspopup));
             // sets dimensions of window
-            pw = new PopupWindow(layout, 300, 470, true);
+            popup = new PopupWindow(layout, 300, 470, true);
             // centers window
-            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
             // set values of fields within window
             redStats = (TextView) layout.findViewById(R.id.redStats);
             blueStats = (TextView) layout.findViewById(R.id.blueStats);
+
+            if(newGameWasClickedOnce) {
+                for(int i = 0; i <  model.returnRedPieces().size(); i++) {
+                    if(i == 0 || (model.returnRedPieces().get(i).getRank()
+                        != model.returnRedPieces().get(i - 1).getRank())) {
+                        redStats.append("\n" + model.returnRedPieces().get(i).getRank());
+                    }
+                }
+                for(int i = 0; i <  model.returnBluePieces().size(); i++) {
+                    if(i == 0 || (model.returnBluePieces().get(i).getRank()
+                        != model.returnBluePieces().get(i - 1).getRank())) {
+                        blueStats.append("\n" + model.returnBluePieces().get(i).getRank());
+                    }
+                }
+            }
+
             cancelPopUp = (Button) layout.findViewById(R.id.closeStats);
             cancelPopUp.setOnClickListener(closePopUp);
 
@@ -534,7 +550,7 @@ public class StrategoScreen
     }
     private OnClickListener closePopUp = new OnClickListener() {
         public void onClick(View v) {
-            pw.dismiss();
+            popup.dismiss();
         }
     };
 }

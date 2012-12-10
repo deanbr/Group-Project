@@ -1,53 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/statisticspopup"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#444"
-    android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/blueStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="57dp"
-        android:layout_marginTop="65dp"
-        android:text="TextView" 
-        android:textColor="#000"/>
+ <TableLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+	 xmlns:tools="http://schemas.android.com/tools"
+	 android:id="@+id/statisticspopup"
+     android:background="#444"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBottom="@+id/closeStats"
+     android:layout_alignRight="@+id/popupTitle"
+     android:layout_marginBottom="136dp"
+     android:layout_marginRight="25dp" >
 
-    <TextView
-        android:id="@+id/popupTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="Game Statistics"
-        android:textColor="#000" />
+      <TableRow
+          android:id="@+id/tableRow1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+          <TextView
+	        android:id="@+id/popupTitle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_marginLeft="10px"
+	        android:gravity="center"
+	        android:text="Game Statistics"
+	        android:textColor="#FFF" />
+	      </TableRow>
 
-    <TextView
-        android:id="@+id/redStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/blueStats"
-        android:layout_alignBottom="@+id/blueStats"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/popupTitle"
-        android:text="TextView"
-        android:textColor="#000" />
+      <TableRow
+          android:id="@+id/tableRow2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+          <AbsoluteLayout >
 
-    <Button
-        android:id="@+id/closeStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="27dp"
-        android:layout_toLeftOf="@+id/blueStats"
-        android:gravity="center"
-        android:text="close" 
-        android:background="@android:color/transparent"
-        />
+          <TextView
+              android:id="@+id/redStats"
+              android:layout_width="120px"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="50px"
+              android:layout_marginRight="20px"
+              android:layout_x="115dp"
+              android:layout_y="0dp"
+              android:text="Red Pieces Remaining:"
+              android:textColor="#FFF" />
 
-</RelativeLayout>
+          <TextView
+              android:id="@+id/blueStats"
+              android:layout_width="120px"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="30px"
+              android:layout_marginRight="0px"
+              android:layout_x="7dp"
+              android:layout_y="0dp"
+              android:paddingRight="0px"
+              android:text="Blue Pieces Remaining:"
+              android:textColor="#FFF" />
+
+          </AbsoluteLayout>
+
+      </TableRow>
+
+
+          <Button
+	        android:id="@+id/closeStats"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginBottom="27dp"
+	        android:layout_marginLeft="0px"
+	        android:layout_below="@+id/blueStats"
+	        android:gravity="center"
+	        android:text="close" 
+	        android:background="@android:color/transparent"
+	        android:textColor="#FFF"
+	        />
+
+
+</TableLayout>
