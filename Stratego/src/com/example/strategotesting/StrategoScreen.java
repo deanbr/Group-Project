@@ -21,50 +21,50 @@ import sofia.app.ShapeScreen;
 
 /**
  * // -------------------------------------------------------------------------
-/**
- * This is the GUI of our stratego project.
- * 0 is Blue team
- * 1 is Red team
- *
- * Credit to http://www.edcollins.com/stratego/stratego-rules-later.htm
- * for the images for all of the pieces.
+ * /** This is the GUI of our stratego project. 0 is Blue team 1 is Red team
+ * Credit to http://www.edcollins.com/stratego/stratego-rules-later.htm for the
+ * images for all of the pieces.
  *
  * @author Jordan sablan (jordans9)
  * @author Brandon Dean (deanbr)
  * @author Jamie Dalrymple (jamied93)
  * @author Matt Morrison (mattm512)
- *  @version Dec 1, 2012
+ * @version Dec 1, 2012
  */
 public class StrategoScreen
     extends ShapeScreen
 {
 
-    private float cellSize;
-    private int size = 10;
-    private GameboardModel model;
+    private float                cellSize;
+    private int                  size                    = 10;
+    private GameboardModel       model;
     private ArrayList<GamePiece> piecesToCover;
 
-    private int totalSetPieces = 0;
-    private boolean hasBeenSet;
-    private boolean redMove = true;
-    private int pieceType = 1;
-    private GamePiece selectedPiece;
-    private boolean selectedPieceIsSelected = false;
-    private boolean newGameWasClickedOnce = false;
+    private int                  totalSetPieces          = 0;
+    private boolean              hasBeenSet;
+    private boolean              redMove                 = true;
+    private int                  pieceType               = 1;
+    private GamePiece            selectedPiece;
+    private boolean              selectedPieceIsSelected = false;
+    private boolean              newGameWasClickedOnce   = false;
 
-    private TextView playerMessage;
-    private TextView teamMessage;
-    private ImageShape[][] screenImages;
-    private ImageShape screenImage;
-    private RectangleShape rs;
-    private RectangleShape[][] boardCells;
-    private boolean canMove = true;//This  boolean is used to prevent the user from moving during the wait period between turns.
+    private TextView             playerMessage;
+    private TextView             teamMessage;
+    private ImageShape[][]       screenImages;
+    private ImageShape           screenImage;
+    private RectangleShape       rs;
+    private RectangleShape[][]   boardCells;
+    private boolean              canMove                 = true;  // This
+// boolean is used to prevent the user from moving during the wait period
+// between turns.
+
 
     /**
      * This method is run initially. It does very little other than some base
      * startup.
      */
-    public void initialize() {
+    public void initialize()
+    {
         playerMessage = (TextView)findViewById(R.id.playerMessage);
         playerMessage.setText("");
         teamMessage = (TextView)findViewById(R.id.teamMessage);
@@ -78,9 +78,12 @@ public class StrategoScreen
         float y1 = 0;
         float x2 = cellSize;
         float y2 = cellSize;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                screenImage = new ImageShape("blank", new RectF(x1, y1, x2, y2));
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                screenImage =
+                    new ImageShape("blank", new RectF(x1, y1, x2, y2));
                 rs = new RectangleShape(x1, y1, x2, y2);
                 rs.setColor(Color.black);
                 y1 += cellSize;
@@ -97,60 +100,76 @@ public class StrategoScreen
         }
     }
 
+
     /**
      * This method is used to set the red players pieces.
      */
-    public void isRedSet() {
-        if (!hasBeenSet) {
-            if (totalSetPieces < 1) {
+    public void isRedSet()
+    {
+        if (!hasBeenSet)
+        {
+            if (totalSetPieces < 1)
+            {
                 pieceType = 1;
                 playerMessage.setText("Set your Marshal \n(#1, 1 piece)");
             }
-            else if (totalSetPieces < 2) {
+            else if (totalSetPieces < 2)
+            {
                 pieceType = 2;
                 playerMessage.setText("Set your General \n(#2, 1 pieces)");
             }
-            else if (totalSetPieces < 4) {
+            else if (totalSetPieces < 4)
+            {
                 pieceType = 3;
                 playerMessage.setText("Set your Colonel \n(#3, 2 pieces)");
             }
-            else if (totalSetPieces < 7) {
+            else if (totalSetPieces < 7)
+            {
                 pieceType = 4;
                 playerMessage.setText("Set your Major \n(#4, 3 pieces)");
             }
-            else if (totalSetPieces < 11) {
+            else if (totalSetPieces < 11)
+            {
                 pieceType = 5;
                 playerMessage.setText("Set your Captain \n(#5, 4 pieces)");
             }
-            else if (totalSetPieces < 15) {
+            else if (totalSetPieces < 15)
+            {
                 pieceType = 6;
                 playerMessage.setText("Set your Liutenant \n(#6, 4 pieces)");
             }
-            else if (totalSetPieces < 19) {
+            else if (totalSetPieces < 19)
+            {
                 pieceType = 7;
                 playerMessage.setText("Set your Sergeant \n(#7, 4 pieces)");
             }
-            else if (totalSetPieces < 24) {
+            else if (totalSetPieces < 24)
+            {
                 pieceType = 8;
                 playerMessage.setText("Set your Miner \n(#8, 5 pieces)");
             }
-            else if (totalSetPieces < 32) {
+            else if (totalSetPieces < 32)
+            {
                 pieceType = 9;
                 playerMessage.setText("Set your Scout \n(#9, 8 pieces)");
             }
-            else if (totalSetPieces < 33) {
+            else if (totalSetPieces < 33)
+            {
                 pieceType = 10;
                 playerMessage.setText("Set your Spy \n(#10, 1 piece)");
             }
-            else if (totalSetPieces < 39) {
+            else if (totalSetPieces < 39)
+            {
                 pieceType = 11;
                 playerMessage.setText("Set your Bombs \n(6 pieces)");
             }
-            else if (totalSetPieces < 40) {
+            else if (totalSetPieces < 40)
+            {
                 pieceType = 12;
                 playerMessage.setText("Set your Flag");
             }
-            else {
+            else
+            {
                 redMove = false;
                 coverPieces();
                 totalSetPieces = 0;
@@ -160,61 +179,77 @@ public class StrategoScreen
         }
     }
 
+
     /**
      * This method is used to set the blue players pieces.
      */
-    public void isBlueSet() {
+    public void isBlueSet()
+    {
         teamMessage.setText("Blue Player set your pieces");
-        if (!hasBeenSet) {
-            if (totalSetPieces < 1) {
+        if (!hasBeenSet)
+        {
+            if (totalSetPieces < 1)
+            {
                 pieceType = 1;
                 playerMessage.setText("Set your Marshal \n(#1, 1 piece)");
             }
-            else if (totalSetPieces < 2) {
+            else if (totalSetPieces < 2)
+            {
                 pieceType = 2;
                 playerMessage.setText("Set your General \n(#2, 1 piece)");
             }
-            else if (totalSetPieces < 4) {
+            else if (totalSetPieces < 4)
+            {
                 pieceType = 3;
                 playerMessage.setText("Set your Colonel \n(#3, 2 pieces)");
             }
-            else if (totalSetPieces < 7) {
+            else if (totalSetPieces < 7)
+            {
                 pieceType = 4;
                 playerMessage.setText("Set your Major \n(#4, 3 pieces)");
             }
-            else if (totalSetPieces < 11) {
+            else if (totalSetPieces < 11)
+            {
                 pieceType = 5;
                 playerMessage.setText("Set your Captain \n(#5, 4 pieces)");
             }
-            else if (totalSetPieces < 15) {
+            else if (totalSetPieces < 15)
+            {
                 pieceType = 6;
                 playerMessage.setText("Set your Lieutenant \n(#6, 4 pieces)");
             }
-            else if (totalSetPieces < 19) {
+            else if (totalSetPieces < 19)
+            {
                 pieceType = 7;
                 playerMessage.setText("Set your Sergeant \n(#7, 4 pieces)");
             }
-            else if (totalSetPieces < 24) {
+            else if (totalSetPieces < 24)
+            {
                 pieceType = 8;
                 playerMessage.setText("Set your Miner \n(#8, 5 pieces)");
             }
-            else if (totalSetPieces < 32) {
+            else if (totalSetPieces < 32)
+            {
                 pieceType = 9;
                 playerMessage.setText("Set your Scout \n(#9, 8 pieces)");
             }
-            else if (totalSetPieces < 33) {
+            else if (totalSetPieces < 33)
+            {
                 pieceType = 10;
                 playerMessage.setText("Set your Spy \n(1 piece)");
             }
-            else if (totalSetPieces < 39) {
+            else if (totalSetPieces < 39)
+            {
                 pieceType = 11;
                 playerMessage.setText("Set your Bombs \n(6 bombs)");
             }
-            else if (totalSetPieces < 40) {
+            else if (totalSetPieces < 40)
+            {
                 pieceType = 12;
                 playerMessage.setText("Set your Flag");
             }
-            else {
+            else
+            {
                 redMove = true;
                 teamMessage.setText("Red's Turn");
                 playerMessage.setText("");
@@ -226,39 +261,59 @@ public class StrategoScreen
         }
     }
 
+
     /**
      * This method handles the user pressing the screen in the shape area.
-     * @param me is the motion event.
+     *
+     * @param me
+     *            is the motion event.
      */
-    public void onTouchDown(MotionEvent me) {
-        if (canMove) {
-            if (newGameWasClickedOnce && !model.getIsGameOver()) {
-                int x = (int) (me.getX() / cellSize);
-                int y = (int) (me.getY() / cellSize);
-                if (!hasBeenSet && redMove) {
+    public void onTouchDown(MotionEvent me)
+    {
+        if (canMove)
+        {
+            if (newGameWasClickedOnce && !model.getIsGameOver())
+            {
+                int x = (int)(me.getX() / cellSize);
+                int y = (int)(me.getY() / cellSize);
+                if (!hasBeenSet && redMove)
+                {
                     playerSetPiece(x, y);
                 }
-                else if (!hasBeenSet && !redMove) {
+                else if (!hasBeenSet && !redMove)
+                {
                     playerSetPiece(x, y);
                 }
-                else if (hasBeenSet && redMove) {
-                    if (selectedPieceIsSelected) {
+                else if (hasBeenSet && redMove)
+                {
+                    if (selectedPieceIsSelected)
+                    {
                         movePiece(x, y);
                     }
-                    else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 1){
-                        if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
-                            selectedPiece =  model.getPiece(x, y);
+                    else if (model.getPiece(x, y) != null
+                        && model.getPiece(x, y).getTeam() == 1)
+                    {
+                        if (model.getPiece(x, y).getRank() != 11
+                            && model.getPiece(x, y).getRank() != 12)
+                        {
+                            selectedPiece = model.getPiece(x, y);
                             screenImages[x][y].setColor(Color.yellow);
                             selectedPieceIsSelected = true;
                         }
                     }
                 }
-                else { // if hasBeenSet && !redMove
-                    if (selectedPieceIsSelected) {
+                else
+                { // if hasBeenSet && !redMove
+                    if (selectedPieceIsSelected)
+                    {
                         movePiece(x, y);
                     }
-                    else if (model.getPiece(x, y) != null && model.getPiece(x, y).getTeam() == 0){
-                        if (model.getPiece(x, y).getRank() != 11 && model.getPiece(x, y).getRank() != 12) {
+                    else if (model.getPiece(x, y) != null
+                        && model.getPiece(x, y).getTeam() == 0)
+                    {
+                        if (model.getPiece(x, y).getRank() != 11
+                            && model.getPiece(x, y).getRank() != 12)
+                        {
                             selectedPiece = model.getPiece(x, y);
                             screenImages[x][y].setColor(Color.yellow);
                             selectedPieceIsSelected = true;
@@ -269,28 +324,36 @@ public class StrategoScreen
         }
     }
 
+
     /**
      * This method handles the red player setting his pieces in the beginning.
-     * @param x is the x position.
-     * @param y is the y position.
+     *
+     * @param x
+     *            is the x position.
+     * @param y
+     *            is the y position.
      */
-    private void playerSetPiece(int x, int y) {
-        if (!redMove && y >= 0 && y <= 3 && model.getPiece(x, y) == null) {
+    private void playerSetPiece(int x, int y)
+    {
+        if (!redMove && y >= 0 && y <= 3 && model.getPiece(x, y) == null)
+        {
             model.setPiece(x, y, 0, pieceType);
 
-            screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+            screenImages[x][y].setImage(model.getPiece(x, y).toString()
+                .toLowerCase());
             screenImages[x][y].setColor(Color.lightBlue);
             boardCells[x][y].setFilled(true);
             boardCells[x][y].setFillColor(Color.lightBlue);
 
-
             totalSetPieces++;
             isBlueSet();
         }
-        else if (redMove && y <= 9 && y >= 6 && model.getPiece(x, y) == null) {
+        else if (redMove && y <= 9 && y >= 6 && model.getPiece(x, y) == null)
+        {
             model.setPiece(x, y, 1, pieceType);
 
-            screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+            screenImages[x][y].setImage(model.getPiece(x, y).toString()
+                .toLowerCase());
             screenImages[x][y].setColor(Color.red);
             boardCells[x][y].setFilled(true);
             boardCells[x][y].setFillColor(Color.red);
@@ -301,52 +364,63 @@ public class StrategoScreen
 
     }
 
+
     /**
      * This method handles the player action choices.
      */
-    private void movePiece(int x, int y) {
+    private void movePiece(int x, int y)
+    {
         int res;
         int oldX = selectedPiece.getX();
         int oldY = selectedPiece.getY();
         Color textColor;
-        if (redMove && selectedPiece.getTeam() == 1) {
-             res = model.movement(selectedPiece, x, y);
-             textColor = Color.red;
+        if (redMove && selectedPiece.getTeam() == 1)
+        {
+            res = model.movement(selectedPiece, x, y);
+            textColor = Color.red;
         }
-        else if (!redMove && selectedPiece.getTeam() == 0) {
+        else if (!redMove && selectedPiece.getTeam() == 0)
+        {
             res = model.movement(selectedPiece, x, y);
             textColor = Color.blue;
         }
-        else {
+        else
+        {
             res = -1;
             textColor = Color.red;
         }
-        switch (res) {
+        switch (res)
+        {
             case 0:
                 screenImages[oldX][oldY].setImage("blank");
-                screenImages[x][y].setImage(model.getPiece(x, y).toString().toLowerCase());
+                screenImages[x][y].setImage(model.getPiece(x, y).toString()
+                    .toLowerCase());
                 screenImages[x][y].setColor(textColor);
 
                 boardCells[oldX][oldY].setFilled(false);
                 boardCells[x][y].setFilled(true);
-                if(textColor.equals(Color.blue)) {
+                if (textColor.equals(Color.blue))
+                {
                     boardCells[x][y].setFillColor(Color.lightBlue);
                 }
-                else {
+                else
+                {
                     boardCells[x][y].setFillColor(Color.red);
                 }
 
-                if (model.getIsGameOver()) {
-                    Toast.makeText(this, "Game Over!", Toast.LENGTH_LONG).show();
+                if (model.getIsGameOver())
+                {
+                    teamMessage.setText("Game Over!");
                     switchTurn();
                     unCoverPieces();
                 }
-                else {
+                else
+                {
                     switchTurn();
                     coverPieces();
                     waitTime();
                 }
-            break;
+                break;
 
             case 1:
                 screenImages[oldX][oldY].setImage("blank");
@@ -356,7 +430,7 @@ public class StrategoScreen
                 switchTurn();
                 coverPieces();
                 waitTime();
-            break;
+                break;
 
             case -1:
                 selectedPieceIsSelected = false;
@@ -372,7 +446,7 @@ public class StrategoScreen
                     boardCells[oldX][oldY].setFilled(true);
                     boardCells[oldX][oldY].setFillColor(Color.lightBlue);
                 }
-            break;
+                break;
 
             case -2:
                 screenImages[oldX][oldY].setImage("blank");
@@ -380,64 +454,75 @@ public class StrategoScreen
                 switchTurn();
                 coverPieces();
                 waitTime();
-            break;
+                break;
         }
         selectedPieceIsSelected = false;
 
     }
 
+
     /**
      * This method is used to give the players a short amount of time to switch.
      */
-    protected void waitTime() {
+    protected void waitTime()
+    {
         canMove = false;
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             public void run()
             {
                 unCoverPieces();
                 canMove = true;
             }
-          }
-          , 7000);
+        }, 7000);
     }
+
 
     /**
      * This is a simple logic statement to swap turns.
      */
-    public void switchTurn() {
-        if (redMove) {
+    public void switchTurn()
+    {
+        if (redMove)
+        {
             redMove = false;
 
             teamMessage.setText("Blue's Turn");
         }
-        else {
+        else
+        {
             redMove = true;
             teamMessage.setText("Red's Turn");
         }
     }
 
+
     /**
      * This initializes a new game when clicked.
      */
-    public void newGameClicked() {
+    public void newGameClicked()
+    {
         model = new GameboardModel();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
                 screenImages[i][j].setImage("blank");
                 boardCells[i][j].setFilled(false);
             }
         }
-            //screenText = new TextShape[10][10];
+        // screenText = new TextShape[10][10];
         hasBeenSet = false;
         newGameWasClickedOnce = true;
         totalSetPieces = 0;
         redMove = true;
-        /*this is a simple fix to prevent the game from breaking if the
-         * user selects the grid before instantiating the objects.
-        */
+        /*
+         * this is a simple fix to prevent the game from breaking if the user
+         * selects the grid before instantiating the objects.
+         */
         teamMessage.setText("Red player set your pieces");
         isRedSet();
     }
+
 
     /**
      * Ends the current game and resets the application.
@@ -445,8 +530,10 @@ public class StrategoScreen
     public void endGameClicked()
     {
         model = new GameboardModel();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
                 screenImages[i][j].setImage("blank");
                 boardCells[i][j].setFilled(false);
             }
@@ -455,49 +542,68 @@ public class StrategoScreen
         teamMessage.setText("");
     }
 
+
     /**
-     * This method covers the pieces of the player whose isn't playing that turn.
+     * This method covers the pieces of the player whose isn't playing that
+     * turn.
      */
-    public void coverPieces() {
+    public void coverPieces()
+    {
         String team;
         Color textColor;
-        if (redMove) {
+        if (redMove)
+        {
             piecesToCover = model.returnBluePieces();
             team = "backblue";
             textColor = Color.lightBlue;
         }
-        else {
+        else
+        {
             piecesToCover = model.returnRedPieces();
             team = "backred";
             textColor = Color.red;
         }
-        for (int i = 0; i < piecesToCover.size(); i++) {
-            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(team);
-            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setColor(textColor);
-            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setFilled(true);
-            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setFillColor(textColor);
+        for (int i = 0; i < piecesToCover.size(); i++)
+        {
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i)
+                .getY()].setImage(team);
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i)
+                .getY()].setColor(textColor);
+            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()]
+                .setFilled(true);
+            boardCells[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()]
+                .setFillColor(textColor);
         }
     }
+
 
     /**
      * This method uncovers the pieces of the player whose turn it is.
      */
-    public void unCoverPieces() {
-        if (redMove) {
+    public void unCoverPieces()
+    {
+        if (redMove)
+        {
             piecesToCover = model.returnRedPieces();
         }
-        else {
+        else
+        {
             piecesToCover = model.returnBluePieces();
         }
         String piece;
-        for (int i = 0; i < piecesToCover.size(); i++) {
+        for (int i = 0; i < piecesToCover.size(); i++)
+        {
             piece = piecesToCover.get(i).toStringShort();
-            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i).getY()].setImage(piecesToCover.get(i).toString().toLowerCase());
+            screenImages[piecesToCover.get(i).getX()][piecesToCover.get(i)
+                .getY()]
+                .setImage(piecesToCover.get(i).toString().toLowerCase());
         }
     }
 
+
     /**
      * Allows access to the model.
+     *
      * @return The gameboard model
      */
     public GameboardModel getModel()
@@ -506,54 +612,74 @@ public class StrategoScreen
     }
 
     private PopupWindow popup;
-    private TextView blueStats;
-    private TextView redStats;
-    private Button cancelPopUp;
+    private TextView    blueStats;
+    private TextView    redStats;
+    private Button      cancelPopUp;
+
+
     // ----------------------------------------------------------
     /**
-     * When clicked, it launches pop up window above the board using the
-     * layout in statisticspopup.xml
+     * When clicked, it launches pop up window above the board using the layout
+     * in statisticspopup.xml
      */
-    public void statisticsPopUpClicked() {
-        try {
-            LayoutInflater inflater = (LayoutInflater) StrategoScreen.this
+    public void statisticsPopUpClicked()
+    {
+        try
+        {
+            LayoutInflater inflater =
+                (LayoutInflater)StrategoScreen.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View layout = inflater.inflate(R.layout.statisticspopup,
-                    (ViewGroup) findViewById(R.id.statisticspopup));
+            View layout =
+                inflater.inflate(
+                    R.layout.statisticspopup,
+                    (ViewGroup)findViewById(R.id.statisticspopup));
             // sets dimensions of window
             popup = new PopupWindow(layout, 300, 470, true);
             // centers window
             popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
             // set values of fields within window
-            redStats = (TextView) layout.findViewById(R.id.redStats);
-            blueStats = (TextView) layout.findViewById(R.id.blueStats);
+            redStats = (TextView)layout.findViewById(R.id.redStats);
+            blueStats = (TextView)layout.findViewById(R.id.blueStats);
 
-            if(newGameWasClickedOnce) {
-                for(int i = 0; i <  model.returnRedPieces().size(); i++) {
-                    if(i == 0 || (model.returnRedPieces().get(i).getRank()
-                        != model.returnRedPieces().get(i - 1).getRank())) {
-                        redStats.append("\n" + model.returnRedPieces().get(i).getRank());
+            if (newGameWasClickedOnce)
+            {
+                for (int i = 0; i < model.returnRedPieces().size(); i++)
+                {
+                    if (i == 0
+                        || (model.returnRedPieces().get(i).getRank() != model
+                            .returnRedPieces().get(i - 1).getRank()))
+                    {
+                        redStats.append("\n"
+                            + model.returnRedPieces().get(i).getRank());
                     }
                 }
-                for(int i = 0; i <  model.returnBluePieces().size(); i++) {
-                    if(i == 0 || (model.returnBluePieces().get(i).getRank()
-                        != model.returnBluePieces().get(i - 1).getRank())) {
-                        blueStats.append("\n" + model.returnBluePieces().get(i).getRank());
+                for (int i = 0; i < model.returnBluePieces().size(); i++)
+                {
+                    if (i == 0
+                        || (model.returnBluePieces().get(i).getRank() != model
+                            .returnBluePieces().get(i - 1).getRank()))
+                    {
+                        blueStats.append("\n"
+                            + model.returnBluePieces().get(i).getRank());
                     }
                 }
             }
 
-            cancelPopUp = (Button) layout.findViewById(R.id.closeStats);
+            cancelPopUp = (Button)layout.findViewById(R.id.closeStats);
             cancelPopUp.setOnClickListener(closePopUp);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
+
     private OnClickListener closePopUp = new OnClickListener() {
-        public void onClick(View v) {
-            popup.dismiss();
-        }
-    };
+                                           public void onClick(View v)
+                                           {
+                                               popup.dismiss();
+                                           }
+                                       };
 }

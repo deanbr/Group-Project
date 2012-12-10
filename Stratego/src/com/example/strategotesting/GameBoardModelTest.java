@@ -26,6 +26,7 @@ public class GameBoardModelTest
         board = new GameboardModel();
     }
 
+
     /**
      * Tests pieces being set and removed from the arraylist of pieces.
      */

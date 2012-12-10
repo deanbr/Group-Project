@@ -5,24 +5,25 @@ import android.widget.Button;
 
 // -------------------------------------------------------------------------
 /**
- *  Tests that the {@link StrategoScreen} class works properly.
+ * Tests that the {@link StrategoScreen} class works properly.
  *
  * @author Jordan sablan (jordans9)
  * @author Brandon Dean (deanbr)
  * @author Jamie Dalrymple (jamied93)
  * @author Matt Morrison (mattm512)
- *  @version Dec 7, 2012
+ * @version Dec 7, 2012
  */
 public class StrategoScreenTest
-extends student.AndroidTestCase<StrategoScreen>
+    extends student.AndroidTestCase<StrategoScreen>
 {
-    //~ Fields ----------------------------------------------------------
+    // ~ Fields ----------------------------------------------------------
     private GameboardModel board;
-    private ShapeView shapeView;
-    private float cellSize;
-    private Button newGame;
-    private Button endGame;
-    private Button statisticsPopUp;
+    private ShapeView      shapeView;
+    private float          cellSize;
+    private Button         newGame;
+    private Button         endGame;
+    private Button         statisticsPopUp;
+
 
     /**
      * Test cases that extend AndroidTestCase must have a parameterless
@@ -34,13 +35,16 @@ extends student.AndroidTestCase<StrategoScreen>
         super(StrategoScreen.class);
     }
 
+
     /**
      *
      */
     public void setUp()
     {
-        cellSize = Math.min(getScreen().getWidth(), getScreen().getHeight()) / 10;
+        cellSize =
+            Math.min(getScreen().getWidth(), getScreen().getHeight()) / 10;
     }
+
 
     /**
      * Simulates the clicking of the button New Game.
@@ -51,6 +55,7 @@ extends student.AndroidTestCase<StrategoScreen>
         assertNull(getScreen().getModel().getPiece(0, 0));
     }
 
+
     /**
      * Simulates the clicking of the button End Game.
      */
@@ -60,17 +65,18 @@ extends student.AndroidTestCase<StrategoScreen>
         assertNull(getScreen().getModel().getPiece(0, 0));
     }
 
+
     /**
      * Tests the clicking of a cell.
      */
     public void testOnTouchDown()
     {
         click(newGame);
-        clickCell(0, 0); //in blue territory, illegal
-        assertNull(getScreen().getModel().getPiece(0, 0));//RED CAN'T SET THERE
+        clickCell(0, 0); // in blue territory, illegal
+        assertNull(getScreen().getModel().getPiece(0, 0));// RED CAN'T SET THERE
 
-        //set rest of red pieces
-        clickCell(0, 6); //row 7
+        // set rest of red pieces
+        clickCell(0, 6); // row 7
         clickCell(1, 6);
         clickCell(2, 6);
         clickCell(3, 6);
@@ -80,7 +86,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 6);
         clickCell(8, 6);
         clickCell(9, 6);
-        clickCell(0, 7); //row 8
+        clickCell(0, 7); // row 8
         clickCell(1, 7);
         clickCell(2, 7);
         clickCell(3, 7);
@@ -90,7 +96,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 7);
         clickCell(8, 7);
         clickCell(9, 7);
-        clickCell(0, 8); //row 9
+        clickCell(0, 8); // row 9
         clickCell(1, 8);
         clickCell(2, 8);
         clickCell(3, 8);
@@ -100,7 +106,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 8);
         clickCell(8, 8);
         clickCell(9, 8);
-        clickCell(0, 9); //row 10
+        clickCell(0, 9); // row 10
         clickCell(1, 9);
         clickCell(2, 9);
         clickCell(3, 9);
@@ -112,11 +118,12 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(9, 9);
         assertEquals("Flag", getScreen().getModel().getPiece(9, 9).toString());
 
-        //set blue pieces
-        clickCell(0, 0); //row 1
-        clickCell(0, 0); //Tries to set piece in occupied place.
+        // set blue pieces
+        clickCell(0, 0); // row 1
+        clickCell(0, 0); // Tries to set piece in occupied place.
         clickCell(1, 0);
-        assertNotSame("General", getScreen().getModel().getPiece(0, 0).toString());
+        assertNotSame("General", getScreen().getModel().getPiece(0, 0)
+            .toString());
         clickCell(2, 0);
         clickCell(3, 0);
         clickCell(4, 0);
@@ -125,7 +132,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 0);
         clickCell(8, 0);
         clickCell(9, 0);
-        clickCell(0, 1); //row 2
+        clickCell(0, 1); // row 2
         clickCell(1, 1);
         clickCell(2, 1);
         clickCell(3, 1);
@@ -135,7 +142,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 1);
         clickCell(8, 1);
         clickCell(9, 1);
-        clickCell(0, 2); //row 3
+        clickCell(0, 2); // row 3
         clickCell(1, 2);
         clickCell(2, 2);
         clickCell(3, 2);
@@ -145,7 +152,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 2);
         clickCell(8, 2);
         clickCell(9, 2);
-        clickCell(0, 3); //row 4
+        clickCell(0, 3); // row 4
         clickCell(1, 3);
         clickCell(2, 3);
         clickCell(3, 3);
@@ -158,135 +165,138 @@ extends student.AndroidTestCase<StrategoScreen>
         assertEquals("Bomb", getScreen().getModel().getPiece(8, 3).toString());
 
         GamePiece temp = getScreen().getModel().getPiece(0, 6);
-        clickCell(0, 6);//Red move
+        clickCell(0, 6);// Red move
         clickCell(0, 5);
 
         assertEquals(temp, getScreen().getModel().getPiece(0, 5));
         waitToMove();
 
-        clickCell(0, 3);//Blue move
+        clickCell(0, 3);// Blue move
         clickCell(0, 4);
         waitToMove();
 
-        clickCell(0, 5);//Red Move assaulting a lower level he will win.
+        clickCell(0, 5);// Red Move assaulting a lower level he will win.
         clickCell(0, 4);
         waitToMove();
 
         temp = getScreen().getModel().getPiece(0, 2);
-        clickCell(0, 2);//Blue trying to move to a space already occupied by blue
+        clickCell(0, 2);// Blue trying to move to a space already occupied by
+// blue
         clickCell(0, 1);// it will not work.
         assertNotSame(temp, getScreen().getModel().getPiece(0, 1));
         clickCell(0, 2);
         clickCell(0, 3);
         waitToMove();
 
-        clickCell(0, 4);//Red Move again assaulting blue piece.
-        clickCell(0, 3);//Will win again.
+        clickCell(0, 4);// Red Move again assaulting blue piece.
+        clickCell(0, 3);// Will win again.
         waitToMove();
-        clickCell(0, 1);//Blue Move
+        clickCell(0, 1);// Blue Move
         clickCell(0, 2);
         waitToMove();
-        clickCell(0, 3);//Red Move
+        clickCell(0, 3);// Red Move
         clickCell(0, 4);
         waitToMove();
-        clickCell(0, 2);//Blue Move
+        clickCell(0, 2);// Blue Move
         clickCell(0, 3);
         waitToMove();
-        clickCell(0, 4);//Red Move
+        clickCell(0, 4);// Red Move
         clickCell(1, 4);
         waitToMove();
-        clickCell(0, 3);//Blue Move
+        clickCell(0, 3);// Blue Move
         clickCell(0, 4);
         waitToMove();
-        clickCell(1, 4);//Red Move
+        clickCell(1, 4);// Red Move
         clickCell(2, 4);
         waitToMove();
-        clickCell(0, 4);//Blue move
+        clickCell(0, 4);// Blue move
         clickCell(1, 4);
         waitToMove();
-        clickCell(2, 4);//Red move
+        clickCell(2, 4);// Red move
         clickCell(3, 4);
         waitToMove();
-        clickCell(1, 4);//Blue move
+        clickCell(1, 4);// Blue move
         clickCell(2, 4);
         waitToMove();
-        clickCell(3, 4);//Red move
+        clickCell(3, 4);// Red move
         clickCell(4, 4);
         waitToMove();
-        clickCell(2, 4);//Blue Move
+        clickCell(2, 4);// Blue Move
         clickCell(3, 4);
         waitToMove();
-        clickCell(4, 4);//Red move
+        clickCell(4, 4);// Red move
         clickCell(5, 4);
         waitToMove();
-        clickCell(3, 4);//Blue move
+        clickCell(3, 4);// Blue move
         clickCell(4, 4);
         waitToMove();
-        clickCell(5, 4);//Red Move
+        clickCell(5, 4);// Red Move
         clickCell(6, 4);
         waitToMove();
-        clickCell(4, 4);//Blue move
+        clickCell(4, 4);// Blue move
         clickCell(5, 4);
         waitToMove();
-        clickCell(6, 4);//Red move
+        clickCell(6, 4);// Red move
         clickCell(7, 4);
         waitToMove();
-        clickCell(5, 4);//Blue move
+        clickCell(5, 4);// Blue move
         clickCell(6, 4);
         waitToMove();
-        clickCell(7, 4);//Red move
+        clickCell(7, 4);// Red move
         clickCell(8, 4);
         waitToMove();
-        clickCell(6, 4);//Blue move
+        clickCell(6, 4);// Blue move
         clickCell(7, 4);
         waitToMove();
-        clickCell(8, 4);//Red move
+        clickCell(8, 4);// Red move
         clickCell(9, 4);
         waitToMove();
-        //Now red is set to take the flag, but first test mine interaction.
+        // Now red is set to take the flag, but first test mine interaction.
 
-        clickCell(0, 0);//Blue move
+        clickCell(0, 0);// Blue move
         clickCell(0, 1);
         waitToMove();
-        clickCell(3, 6);//Red Move
+        clickCell(3, 6);// Red Move
         clickCell(3, 5);
         waitToMove();
-        clickCell(0, 1);//Blue move
+        clickCell(0, 1);// Blue move
         clickCell(0, 2);
         waitToMove();
-        clickCell(3, 5);//Red move
+        clickCell(3, 5);// Red move
         clickCell(3, 4);
         waitToMove();
-        clickCell(0, 2);//Blue move
+        clickCell(0, 2);// Blue move
         clickCell(0, 3);
         waitToMove();
-        clickCell(3, 4);//Red moves to mine and loses.
+        clickCell(3, 4);// Red moves to mine and loses.
         clickCell(3, 3);
         waitToMove();
         assertNull(getScreen().getModel().getPiece(3, 4));
         assertEquals("Bomb", getScreen().getModel().getPiece(3, 3).toString());
 
         temp = getScreen().getModel().getPiece(0, 3);
-        clickCell(0, 3);//Blue move
-        clickCell(9, 9);//Illegal square selected piece reset.
+        clickCell(0, 3);// Blue move
+        clickCell(9, 9);// Illegal square selected piece reset.
         clickCell(0, 3);
         clickCell(0, 4);
         assertEquals(temp, getScreen().getModel().getPiece(0, 4));
         waitToMove();
 
-        clickCell(9, 4);//Red move
-        clickCell(9, 3);//Takes flag for the win.
+        clickCell(9, 4);// Red move
+        clickCell(9, 3);// Takes flag for the win.
         assertEquals(true, getScreen().getModel().getIsGameOver());
     }
+
 
     /**
      * This method tests if there is a tie.
      */
-    public void testTieScenario() {
+    public void testTieScenario()
+    {
         click(newGame);
 
-        //set rest of red pieces
-        clickCell(0, 6); //row 7
+        // set rest of red pieces
+        clickCell(0, 6); // row 7
         clickCell(1, 6);
         clickCell(2, 6);
         clickCell(3, 6);
@@ -296,7 +306,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 6);
         clickCell(8, 6);
         clickCell(9, 6);
-        clickCell(0, 7); //row 8
+        clickCell(0, 7); // row 8
         clickCell(1, 7);
         clickCell(2, 7);
         clickCell(3, 7);
@@ -306,7 +316,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 7);
         clickCell(8, 7);
         clickCell(9, 7);
-        clickCell(0, 8); //row 9
+        clickCell(0, 8); // row 9
         clickCell(1, 8);
         clickCell(2, 8);
         clickCell(3, 8);
@@ -316,7 +326,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 8);
         clickCell(8, 8);
         clickCell(9, 8);
-        clickCell(0, 9); //row 10
+        clickCell(0, 9); // row 10
         clickCell(1, 9);
         clickCell(2, 9);
         clickCell(3, 9);
@@ -327,9 +337,9 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(8, 9);
         clickCell(9, 9);
 
-        //set blue pieces
-        clickCell(0, 3); //Marshal
-        clickCell(0, 0); //Tries to set piece in occupied place.
+        // set blue pieces
+        clickCell(0, 3); // Marshal
+        clickCell(0, 0); // Tries to set piece in occupied place.
         clickCell(1, 0);
         clickCell(2, 0);
         clickCell(3, 0);
@@ -339,7 +349,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 0);
         clickCell(8, 0);
         clickCell(9, 0);
-        clickCell(0, 1); //row 2
+        clickCell(0, 1); // row 2
         clickCell(1, 1);
         clickCell(2, 1);
         clickCell(3, 1);
@@ -349,7 +359,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 1);
         clickCell(8, 1);
         clickCell(9, 1);
-        clickCell(0, 2); //row 3
+        clickCell(0, 2); // row 3
         clickCell(1, 2);
         clickCell(2, 2);
         clickCell(3, 2);
@@ -359,7 +369,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 2);
         clickCell(8, 2);
         clickCell(9, 2);
-        clickCell(0, 0); //row 4
+        clickCell(0, 0); // row 4
         clickCell(1, 3);
         clickCell(2, 3);
         clickCell(3, 3);
@@ -370,25 +380,27 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(8, 3);
         clickCell(9, 3);
 
-        clickCell(0, 6);//Red move
+        clickCell(0, 6);// Red move
         clickCell(0, 5);
         waitToMove();
-        clickCell(0, 3);//Blue Move
+        clickCell(0, 3);// Blue Move
         clickCell(0, 4);
         waitToMove();
-        clickCell(0, 5);//Red move to attack same piece of blues will be tie
-        clickCell(0, 4);//Tie
+        clickCell(0, 5);// Red move to attack same piece of blues will be tie
+        clickCell(0, 4);// Tie
         waitToMove();
         assertNull(getScreen().getModel().getPiece(0, 4));
         assertNull(getScreen().getModel().getPiece(0, 5));
     }
 
+
     /**
      * This method will pop the game statistics popup.
      */
-    public void testGameStats() {
-      //set rest of red pieces
-        clickCell(0, 6); //row 7
+    public void testGameStats()
+    {
+        // set rest of red pieces
+        clickCell(0, 6); // row 7
         clickCell(1, 6);
         clickCell(2, 6);
         clickCell(3, 6);
@@ -398,7 +410,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 6);
         clickCell(8, 6);
         clickCell(9, 6);
-        clickCell(0, 7); //row 8
+        clickCell(0, 7); // row 8
         clickCell(1, 7);
         clickCell(2, 7);
         clickCell(3, 7);
@@ -408,7 +420,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 7);
         clickCell(8, 7);
         clickCell(9, 7);
-        clickCell(0, 8); //row 9
+        clickCell(0, 8); // row 9
         clickCell(1, 8);
         clickCell(2, 8);
         clickCell(3, 8);
@@ -418,7 +430,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 8);
         clickCell(8, 8);
         clickCell(9, 8);
-        clickCell(0, 9); //row 10
+        clickCell(0, 9); // row 10
         clickCell(1, 9);
         clickCell(2, 9);
         clickCell(3, 9);
@@ -429,8 +441,8 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(8, 9);
         clickCell(9, 9);
 
-        //set blue pieces
-        clickCell(0, 0); //row 1
+        // set blue pieces
+        clickCell(0, 0); // row 1
         clickCell(1, 0);
         clickCell(2, 0);
         clickCell(3, 0);
@@ -440,7 +452,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 0);
         clickCell(8, 0);
         clickCell(9, 0);
-        clickCell(0, 1); //row 2
+        clickCell(0, 1); // row 2
         clickCell(1, 1);
         clickCell(2, 1);
         clickCell(3, 1);
@@ -450,7 +462,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 1);
         clickCell(8, 1);
         clickCell(9, 1);
-        clickCell(0, 2); //row 3
+        clickCell(0, 2); // row 3
         clickCell(1, 2);
         clickCell(2, 2);
         clickCell(3, 2);
@@ -460,7 +472,7 @@ extends student.AndroidTestCase<StrategoScreen>
         clickCell(7, 2);
         clickCell(8, 2);
         clickCell(9, 2);
-        clickCell(0, 3); //row 4
+        clickCell(0, 3); // row 4
         clickCell(1, 3);
         clickCell(2, 3);
         clickCell(3, 3);
@@ -475,6 +487,7 @@ extends student.AndroidTestCase<StrategoScreen>
         assertNotNull(getView(where.textIs("Game Statistics")));
     }
 
+
     /**
      * Simulates touching down on the middle of the specified cell in the maze.
      */
@@ -482,6 +495,7 @@ extends student.AndroidTestCase<StrategoScreen>
     {
         touchDown(shapeView, (x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
     }
+
 
     /**
      * Simulates clicking the middle of the specified cell in the maze. This is
@@ -493,15 +507,20 @@ extends student.AndroidTestCase<StrategoScreen>
         touchUp();
     }
 
+
     /**
      * This method is necessary for GUI tests to run as we have a wait function
      * built into the GUI that prevents moves for a certain period of time, so
      * the user may switch.
      */
-    private void waitToMove() {
-        try {
+    private void waitToMove()
+    {
+        try
+        {
             java.lang.Thread.currentThread().sleep(7000);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

@@ -129,25 +129,30 @@ public class GameboardModel
             int movedCoord;
             int finalDestination;
             boolean movedCoordIsX = true;
-            if((x == oldX && y != oldY)) {
+            if ((x == oldX && y != oldY))
+            {
                 movedCoord = oldY;
                 finalDestination = y;
                 movedCoordIsX = false;
             }
-            else {
+            else
+            {
                 movedCoord = oldX;
                 finalDestination = x;
             }
-            if(finalDestination < movedCoord) {
+            if (finalDestination < movedCoord)
+            {
                 int temp = movedCoord;
                 movedCoord = finalDestination;
                 finalDestination = temp;
             }
-            else {
+            else
+            {
                 movedCoord++;
                 finalDestination++;
             }
-            if(movedCoordIsX) {
+            if (movedCoordIsX)
+            {
                 for (int i = movedCoord; i < finalDestination; i++)
                 {
                     if (board[i][y] != null)
@@ -156,7 +161,8 @@ public class GameboardModel
                     }
                 }
             }
-            else {
+            else
+            {
                 for (int j = movedCoord; j < finalDestination; j++)
                 {
                     if (board[x][j] != null)
@@ -239,6 +245,7 @@ public class GameboardModel
             redPieces.remove(board[x][y]);
         }
     }
+
 
     /**
      * Returns true if the game ends.
